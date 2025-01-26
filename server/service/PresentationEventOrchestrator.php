@@ -22,5 +22,9 @@ class PresentationEventService {
     public function addEvent($presentation_title, $presenter, $date) {
         return $this->presentationEventsRepository->addPresentationEvent($presentation_title, $presenter, $date);
     }
+
+    public function deleteEvent($presentation_title, $presenter) {
+        return $this->presentationEventsRepository->deletePresentationEvent($presentation_title, $presenter);
+    }
 }
 ?>

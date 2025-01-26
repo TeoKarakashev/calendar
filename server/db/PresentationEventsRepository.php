@@ -3,7 +3,7 @@
         private $connection;
         private $getPresentationEvents;
         private $addPresentationEvent;
-
+        private $deletePresentationEvent;
 
         public function __construct() {
             $config = parse_ini_file('../../config.ini', true);
@@ -37,6 +37,11 @@
             VALUES (:presentation_title, :presenter, :date)
             ";
             $this->addPresentationEvent = $this->connection->prepare($sql);
+
+            $sql = "DELETE FROM presentation_events
+                    WHERE presentation_title = :presentation_title
+                          AND presenter = :presenter";
+            $this->deletePresentationEvent = $this->connection->prepare($sql);
         }
         
 
@@ -55,6 +60,16 @@
                 $this->addPresentationEvent->execute(["presentation_title" => $presentation_title,
                                                       "presenter" => $presenter,
                                                       "date" => $date]);
+                return ["success" => true];
+            } catch (PDOException $e) {
+                return ["success" => false, "error" => $e->getMessage()];
+            }
+        }
+
+        public function deletePresentationEvent($presentation_title, $presenter) {
+            try {
+                $this->addPresentationEvent->execute(["presentation_title" => $presentation_title,
+                                                      "presenter" => $presenter]);
                 return ["success" => true];
             } catch (PDOException $e) {
                 return ["success" => false, "error" => $e->getMessage()];

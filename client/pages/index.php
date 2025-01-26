@@ -14,22 +14,13 @@
   <script defer src="../scripts/calendar.js"></script>
   <link rel="stylesheet" href="../styles/calendar.css"/>
   <link rel="stylesheet" href="../styles/navbar.css"/>
+  <script defer src="../scripts/navbar.js"></script>
 </head>
 <body onload="loadSession()">
   <?php include '../components/navbar.php'; ?>
 
   <div id="content">
-  <h1 style="text-align: center;">Simple Calendar</h1>
-  <div class="calendar" id="calendar"></div>
-  </div>
-
-  <div class="popup" id="popup">
-    <div id="popupContent"></div>
-  </div>
-
-  <div class="popup" id="secondaryPopup">
-    <div id="secondaryPopupContent"></div>
+  <?php include '../components/calendar.php'; ?>
   </div>
 </body>
-<script defer src="../scripts/navbar.js"></script>
 </html>

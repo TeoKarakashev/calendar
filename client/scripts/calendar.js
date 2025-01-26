@@ -1,90 +1,81 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const calendar = document.getElementById("calendar");
-  const popup = document.getElementById("popup");
-  const popupContent = document.getElementById("popupContent");
+function formatDate(date) {
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  const seconds = date.getSeconds().toString().padStart(2, '0');
 
-  const secondaryPopup = document.getElementById("secondaryPopup");
-  const secondaryPopupContent = document.getElementById("secondaryPopupContent");
+  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+}
 
-  // Time slots
-  const timeSlots = ["9:30", "10:00", "10:30", "11:00"];
+function generateDays(dateParam = new Date()) {
+  const year = dateParam.getFullYear();
+  const month = dateParam.getMonth();
 
-  // Generate the calendar for one month
-  const daysInMonth = 30; // Assuming 30 days for simplicity
-  for (let i = 1; i <= daysInMonth; i++) {
-    const day = document.createElement("div");
-    day.className = "day";
-    day.textContent = i;
-    day.addEventListener("click", () => showPopup(i));
-    calendar.appendChild(day);
+  const daysContainer = document.querySelector(".calendar-grid");
+  const monthYearTitle = document.getElementById("month-year");
+
+  daysContainer.querySelectorAll(".day").forEach((day) => day.remove());
+
+  const monthName = new Date(year, month).toLocaleString("default", { month: "long" });
+  monthYearTitle.textContent = `${monthName} ${year}`;
+
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  const firstDayIndex = new Date(year, month, 1).getDay();
+
+  for (let i = 0; i < firstDayIndex; i++) {
+    const blankCell = document.createElement("div");
+    blankCell.classList.add("day", "empty");
+    daysContainer.appendChild(blankCell);
   }
 
-  // Show the primary popup
-  function showPopup(day) {
-    // Clear previous content
-    popupContent.innerHTML = `
-      <div class="popup-header">
-        Day Details for Day ${day} 
-        <button class="close-btn" id="closeBtn">Close</button>
-      </div>
-    `;
+  for (let day = 1; day <= daysInMonth; day++) {
+    const dayElement = document.createElement("div");
+    dayElement.classList.add("day");
+    dayElement.textContent = day;
+    dayElement.setAttribute('date', formatDate(dateParam));
+    dayElement.setAttribute("data-date", `${year}-${(month + 1).toString().padStart(2, "0")}-${day.toString().padStart(2, "0")}`);
+    daysContainer.appendChild(dayElement);
 
-    const timeSlotContainer = document.createElement("div");
-    timeSlots.forEach((time) => {
-      const slotDiv = document.createElement("div");
-      slotDiv.className = "time-slot";
-      slotDiv.innerHTML = `
-        <span>${time}</span>
-        <button class="reserve-btn">Reserve</button>
-        <button class="view-btn" data-time="${time}">View</button>
-      `;
-      timeSlotContainer.appendChild(slotDiv);
+    dayElement.addEventListener("click", () => {
+      document.getElementById("popup").style.display = "block";
     });
+  }
+}
 
-    popupContent.appendChild(timeSlotContainer);
+document.addEventListener('DOMContentLoaded', () => {
+  generateDays();
 
-    // Add event listener to close button
-    document.getElementById("closeBtn").onclick = () => {
-      popup.classList.remove("active");
-    };
+  const days = document.querySelectorAll('.day');
+  const popup = document.getElementById('popup');
+  const closePopup = document.getElementById('close-popup');
 
-    // Add event listener to "View" buttons
-    const viewButtons = popupContent.querySelectorAll(".view-btn");
-    viewButtons.forEach((button) => {
-      button.addEventListener("click", (event) => {
-        const time = event.target.getAttribute("data-time");
-        showSecondaryPopup(day, time);
-      });
+  days.forEach((day) => {
+    day.addEventListener('click', () => {
+      popup.style.display = 'block';
+      popup.setAttribute('day', day.getAttribute('date'))
     });
+  });
 
-    popup.classList.add("active");
-  }
+  closePopup.addEventListener('click', () => {
+    popup.style.display = 'none';
+  });
 
-  // Show the secondary popup
-  function showSecondaryPopup(day, time) {
-    secondaryPopupContent.innerHTML = `
-      <div class="popup-header">
-        Presentation Details for Day ${day} at ${time} 
-        <button class="close-btn" id="secondaryCloseBtn">Close</button>
-      </div>
-      <div class="details">
-        <label for="name">Име:</label>
-        <input type="text" id="name" placeholder="Enter your name" />
-        
-        <label for="Име в системата">:</label>
-        <input type="text" id="username" placeholder="Enter your username" />
-        
-        <label for="presentation">Тема:</label>
-        <input type="text" id="presentation" placeholder="Enter presentation name" />
-      </div>
-    `;
+  document.getElementById('prev-month').addEventListener('click', () => {
+    const currentMonthDate = document.querySelectorAll(".day")[7].getAttribute('date');
 
-    // Add close button behavior for secondary popup
-    document.getElementById("secondaryCloseBtn").onclick = () => {
-      secondaryPopup.classList.remove("active");
-      secondaryPopupContent.innerHTML = ''; // Reset content
-    };
+    const newDate = new Date(currentMonthDate);
+    newDate.setMonth(newDate.getMonth() - 1);
+    generateDays(newDate)
+  });
 
-    secondaryPopup.classList.add("active");
-  }
+  document.getElementById('next-month').addEventListener('click', () => {
+    const currentMonthDate = document.querySelectorAll(".day")[7].getAttribute('date');
+
+    const newDate = new Date(currentMonthDate);
+    newDate.setMonth(newDate.getMonth() + 1);
+    generateDays(newDate)
+  });
 });
