@@ -1,13 +1,8 @@
 <?php
-  require_once '../service/UserOrchestrator.php';
   require_once '../service/PresentationEventOrchestrator.php';
 
   session_start();
   header('Content-type: application/x-www-form-urlencoded');
-
-  //$username = isset($_POST['username']) ? testInput($_POST['username']) : '';
-  $username = isset($_SESSION['username']) ? $_SESSION['username'] : '';
-  $user = new User($username, '', '', '', []);
 
   $eventsOrchestrator = new PresentationEventService();
 

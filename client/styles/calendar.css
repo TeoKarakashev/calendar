@@ -60,69 +60,75 @@ body {
 }
 
 .popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 300px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   display: none;
-  z-index: 1000;
+  position: fixed;
+  top: 57%;
+  left: 73%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 1px solid #007bff;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
 
-.popup-content {
-  padding: 1.5rem;
-  position: relative;
-  text-align: center;
+#popupContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.close-btn {
+#hourly-reservations {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.hour-row {
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px 0;
+  width: 100%;
+}
+
+.hour-row button {
+  padding: 8px 15px;
+  cursor: pointer;
+  margin-left: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.hour-row button:hover {
+  background-color: #0056b3;
+}
+
+#close-popup {
   position: absolute;
   top: 10px;
   right: 10px;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-
-.close-btn:hover {
-  color: red;
-}
-
-h3 {
-  margin-top: 0;
-}
-
-.time-slots {
-  list-style: none;
-  padding: 0;
-  margin: 1rem 0;
-}
-
-.time-slots li {
-  padding: 0.5rem;
-  background-color: #eaf2fc;
-  border-radius: 4px;
-  margin-bottom: 0.5rem;
-}
-
-.popup-actions {
-  display: flex;
-  justify-content: space-around;
-}
-
-.action-btn {
-  background-color: #007BFF;
+  background-color: #dc3545;
   color: white;
   border: none;
-  border-radius: 4px;
-  padding: 0.5rem 1rem;
+  font-size: 16px;
   cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 50%;
 }
 
-.action-btn:hover {
-  background-color: #0056b3;
+#close-popup:hover {
+  background-color: #c82333;
+}
+
+.hour-row button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.hour-row span {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
 }

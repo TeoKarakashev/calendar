@@ -29,7 +29,7 @@
         }
 
         private function prepareStatements() {
-            $sql = "SELECT presentation_title, presenter
+            $sql = "SELECT presentation_title, presenter, date
                     FROM presentation_events";
             $this->getPresentationEvents = $this->connection->prepare($sql);
 
@@ -68,8 +68,8 @@
 
         public function deletePresentationEvent($presentation_title, $presenter) {
             try {
-                $this->addPresentationEvent->execute(["presentation_title" => $presentation_title,
-                                                      "presenter" => $presenter]);
+                $this->deletePresentationEvent->execute(["presentation_title" => $presentation_title,
+                                                         "presenter" => $presenter]);
                 return ["success" => true];
             } catch (PDOException $e) {
                 return ["success" => false, "error" => $e->getMessage()];

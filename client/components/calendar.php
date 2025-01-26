@@ -17,17 +17,10 @@
   </div>
 
   <div class="popup" id="popup">
-    <div class="popup-content">
-      <button class="close-btn" id="close-popup">&times;</button>
-      <h3>Available Times</h3>
-      <ul class="time-slots">
-        <li>9:30 AM</li>
-        <li>10:00 AM</li>
-        <li>11:00 AM</li>
-      </ul>
-      <div class="popup-actions">
-        <button class="action-btn reserve-btn">Reserve</button>
-        <button class="action-btn cancel-btn">Cancel</button>
-      </div>
+  <div id="popupContent">
+    <button id="close-popup" onclick="closePopup()">X</button>
+    <div id="hourly-reservations">
     </div>
   </div>
+  </div>
+</div>
