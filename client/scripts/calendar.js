@@ -31,13 +31,15 @@ const generateDays = (dateParam = new Date()) => {
     daysContainer.appendChild(blankCell);
   }
 
-  console.log(formatDate(dateParam));
-
   for (let day = 1; day <= daysInMonth; day++) {
     const dayElement = document.createElement("div");
     dayElement.classList.add("day");
     dayElement.textContent = day;
-    dayElement.setAttribute('date', formatDate(dateParam));
+
+    const currentDay = new Date(dateParam);
+    currentDay.setDate(day);
+
+    dayElement.setAttribute('date', formatDate(currentDay));
     dayElement.setAttribute("data-date", `${year}-${(month + 1).toString().padStart(2, "0")}-${day.toString().padStart(2, "0")}`);
     daysContainer.appendChild(dayElement);
 
@@ -45,7 +47,21 @@ const generateDays = (dateParam = new Date()) => {
       document.getElementById("popup").style.display = "block";
     });
   }
+
+  document.querySelectorAll(".day").forEach(dayElement => {
+    dayElement.addEventListener("click", async () => {
+      const day = dayElement.getAttribute('date');
+      await openPopup(day);
+    });
+  });
 }
+
+const areDatesEqual = (first, second) => {
+  return first.getFullYear() === second.getFullYear()
+    && first.getMonth() === second.getMonth()
+    && first.getDate() === second.getDate()
+    && first.getTime() === second.getTime();
+};
 
 const openPopup = async (day) => {
   const popup = document.getElementById("popup");
@@ -80,13 +96,13 @@ const openPopup = async (day) => {
     reserveButton.onclick = async () => await reserveSlot(currentUserPresentation, username, currentDayTime);
     reserveButton.style.marginLeft = '60px';
 
-    const isReserveDisabled = !!events.find(event => new Date(event.date).getTime() == currentDayTime.getTime());
+    const isReserveDisabled = !!events.find(event => areDatesEqual(new Date(event.date), currentDayTime));
 
     if (isReserveDisabled || hasCurrentUserReserved) {
       reserveButton.setAttribute('disabled', true);
     }
 
-    const isCancelEnabled = !!events.find(event => new Date(event.date).getTime() == currentDayTime.getTime()
+    const isCancelEnabled = !!events.find(event => areDatesEqual(new Date(event.date), currentDayTime)
       && username === event.presenter);
 
     const cancelButton = document.createElement("button");
@@ -130,25 +146,11 @@ const cancelReservation = async (currentUserPresentation, username) => {
   location.reload();
 }
 
-document.querySelectorAll(".day").forEach(dayElement => {
-  dayElement.addEventListener("click", async () => {
-    const day = dayElement.textContent;
-    await openPopup(day);
-  });
-});
-
 document.addEventListener('DOMContentLoaded', () => {
   generateDays();
 
-  const days = document.querySelectorAll('.day');
   const popup = document.getElementById('popup');
   const closePopup = document.getElementById('close-popup');
-
-  days.forEach((day) => {
-    day.addEventListener('click', () => {
-      openPopup(day.getAttribute('date'))
-    });
-  });
 
   closePopup.addEventListener('click', () => {
     popup.style.display = 'none';
