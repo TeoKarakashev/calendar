@@ -5,11 +5,13 @@
 
   $eventsOrchestrator = new PresentationEventService();
 
-  $result = $eventsOrchestrator->deleteEvent();
+  if ($_POST) {
+    $result = $eventsOrchestrator->deleteEvent($_POST['presentationTitle'], $_POST['presenter']);
 
-  http_response_code(200);
+    http_response_code(200);
     echo json_encode([
       'success' => true,
       'message'=> 'success',
       'data' => $result]);
+  }
 ?>

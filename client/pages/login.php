@@ -20,10 +20,7 @@
 </head>
 <body>
   <?php include '../components/navbar.php'; ?>
-  
-  <div id="errors">
-    <p class="error-msg"></p>
-  </div>
+
   <form id="login-form">
     <p class="form-title">Login</p>
     <div class="login-form-input">

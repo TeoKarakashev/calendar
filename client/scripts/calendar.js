@@ -1,4 +1,4 @@
-function formatDate(date) {
+const formatDate = (date) => {
   const year = date.getFullYear();
   const month = (date.getMonth() + 1).toString().padStart(2, '0');
   const day = date.getDate().toString().padStart(2, '0');
@@ -9,7 +9,7 @@ function formatDate(date) {
   return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
 }
 
-function generateDays(dateParam = new Date()) {
+const generateDays = (dateParam = new Date()) => {
   const year = dateParam.getFullYear();
   const month = dateParam.getMonth();
 
@@ -31,6 +31,8 @@ function generateDays(dateParam = new Date()) {
     daysContainer.appendChild(blankCell);
   }
 
+  console.log(formatDate(dateParam));
+
   for (let day = 1; day <= daysInMonth; day++) {
     const dayElement = document.createElement("div");
     dayElement.classList.add("day");
@@ -45,7 +47,7 @@ function generateDays(dateParam = new Date()) {
   }
 }
 
-async function openPopup(day) {
+const openPopup = async (day) => {
   const popup = document.getElementById("popup");
   const hourlyReservations = document.getElementById("hourly-reservations");
 
@@ -53,7 +55,13 @@ async function openPopup(day) {
 
   const hours = ["9:30", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00"];
 
+  const username = localStorage.getItem('username');
+
   const events = (await getData('../../server/controller/get_events.php')).data;
+
+  const hasCurrentUserReserved = events.find(event => event.presenter === username);
+
+  const currentUserPresentation = (await getData('../../server/controller/load-user.php')).presentation;
 
   hours.forEach(hour => {
     const currentDayTime = new Date(day);
@@ -69,21 +77,21 @@ async function openPopup(day) {
 
     const reserveButton = document.createElement("button");
     reserveButton.textContent = "Reserve";
-    reserveButton.onclick = () => reserveSlot(day, hour);
+    reserveButton.onclick = async () => await reserveSlot(currentUserPresentation, username, currentDayTime);
     reserveButton.style.marginLeft = '60px';
 
     const isReserveDisabled = !!events.find(event => new Date(event.date).getTime() == currentDayTime.getTime());
-    
-    if (isReserveDisabled) {
+
+    if (isReserveDisabled || hasCurrentUserReserved) {
       reserveButton.setAttribute('disabled', true);
     }
 
     const isCancelEnabled = !!events.find(event => new Date(event.date).getTime() == currentDayTime.getTime()
-                                                  && localStorage.getItem('username') === event.presenter);
+      && username === event.presenter);
 
     const cancelButton = document.createElement("button");
     cancelButton.textContent = "Cancel";
-    cancelButton.onclick = () => cancelReservation(day, hour);
+    cancelButton.onclick = async () => await cancelReservation(currentUserPresentation, username);
 
     if (!isCancelEnabled) {
       cancelButton.setAttribute('disabled', true);
@@ -103,12 +111,23 @@ function closePopup() {
   document.getElementById("popup").style.display = "none";
 }
 
-function reserveSlot(day, hour) {
-  console.log(`Reserved ${hour} on ${day}`);
+const reserveSlot = async (currentUserPresentation, username, currentDayTime) => {
+  await sendData('../../server/controller/add_event.php',
+    { presentationTitle: currentUserPresentation,
+      presenter: username,
+      date: formatDate(currentDayTime) })
+      .catch(err => console.log(err));
+
+  location.reload();
 }
 
-function cancelReservation(day, hour) {
-  console.log(`Cancelled ${hour} on ${day}`);
+const cancelReservation = async (currentUserPresentation, username) => {
+  await sendData('../../server/controller/delete_event.php',
+    { presentationTitle: currentUserPresentation,
+      presenter: username })
+      .catch(err => console.log(err));
+
+  location.reload();
 }
 
 document.querySelectorAll(".day").forEach(dayElement => {
