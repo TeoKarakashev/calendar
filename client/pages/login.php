@@ -14,17 +14,13 @@
   <title>Calendar</title>
   <script defer src="../scripts/utilities.js"></script>
   <script defer src="../scripts/login.js"></script>
+  <link rel="stylesheet" href="../styles/navbar.css"/>
+  <link rel="stylesheet" href="../styles/login.css"/>
+  <script defer src="../scripts/navbar.js"></script>
 </head>
 <body>
-<nav class="navbar">
-    <ul>
-      <li><a class="links" href="./register.php">Register</a></li>
-      <li><a class="links" href="./login.php">Login</a></li>
-    </ul>
-  </nav>
-  <div id="errors">
-    <p class="error-msg"></p>
-  </div>
+  <?php include '../components/navbar.php'; ?>
+
   <form id="login-form">
     <p class="form-title">Login</p>
     <div class="login-form-input">
@@ -32,8 +28,9 @@
     </div>
     <div class="login-form-input">
       <input type="password" placeholder="Password" id="password"/>
+      <p class="error-message" id="password-error"></p>
     </div>
     <button id="login-btn" type="submit">Login</button>
-  </div>
+  </form>
 </body>
 </html>

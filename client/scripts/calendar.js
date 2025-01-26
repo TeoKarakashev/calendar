@@ -1,90 +1,187 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const calendar = document.getElementById("calendar");
+const formatDate = (date) => {
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  const seconds = date.getSeconds().toString().padStart(2, '0');
+
+  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+}
+
+const generateDays = (dateParam = new Date()) => {
+  const year = dateParam.getFullYear();
+  const month = dateParam.getMonth();
+
+  const daysContainer = document.querySelector(".calendar-grid");
+  const monthYearTitle = document.getElementById("month-year");
+
+  daysContainer.querySelectorAll(".day").forEach((day) => day.remove());
+
+  const monthName = new Date(year, month).toLocaleString("default", { month: "long" });
+  monthYearTitle.textContent = `${monthName} ${year}`;
+
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  const firstDayIndex = new Date(year, month, 1).getDay();
+
+  for (let i = 0; i < firstDayIndex; i++) {
+    const blankCell = document.createElement("div");
+    blankCell.classList.add("day", "empty");
+    daysContainer.appendChild(blankCell);
+  }
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    const dayElement = document.createElement("div");
+    dayElement.classList.add("day");
+    dayElement.textContent = day;
+
+    const currentDay = new Date(dateParam);
+    currentDay.setDate(day);
+
+    dayElement.setAttribute('date', formatDate(currentDay));
+    dayElement.setAttribute("data-date", `${year}-${(month + 1).toString().padStart(2, "0")}-${day.toString().padStart(2, "0")}`);
+    daysContainer.appendChild(dayElement);
+
+    dayElement.addEventListener("click", () => {
+      document.getElementById("popup").style.display = "block";
+    });
+  }
+
+  document.querySelectorAll(".day").forEach(dayElement => {
+    dayElement.addEventListener("click", async () => {
+      const day = dayElement.getAttribute('date');
+      await openPopup(day);
+    });
+  });
+}
+
+const areDatesEqual = (first, second) => {
+  return first.getFullYear() === second.getFullYear()
+    && first.getMonth() === second.getMonth()
+    && first.getDate() === second.getDate()
+    && first.getTime() === second.getTime();
+};
+
+const openPopup = async (day) => {
   const popup = document.getElementById("popup");
-  const popupContent = document.getElementById("popupContent");
+  const hourlyReservations = document.getElementById("hourly-reservations");
 
-  const secondaryPopup = document.getElementById("secondaryPopup");
-  const secondaryPopupContent = document.getElementById("secondaryPopupContent");
+  hourlyReservations.innerHTML = "";
 
-  // Time slots
-  const timeSlots = ["9:30", "10:00", "10:30", "11:00"];
+  const hours = ["9:30", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00"];
 
-  // Generate the calendar for one month
-  const daysInMonth = 30; // Assuming 30 days for simplicity
-  for (let i = 1; i <= daysInMonth; i++) {
-    const day = document.createElement("div");
-    day.className = "day";
-    day.textContent = i;
-    day.addEventListener("click", () => showPopup(i));
-    calendar.appendChild(day);
-  }
+  const username = localStorage.getItem('username');
 
-  // Show the primary popup
-  function showPopup(day) {
-    // Clear previous content
-    popupContent.innerHTML = `
-      <div class="popup-header">
-        Day Details for Day ${day} 
-        <button class="close-btn" id="closeBtn">Close</button>
-      </div>
-    `;
+  const events = (await getData('../../server/controller/get_events.php')).data;
 
-    const timeSlotContainer = document.createElement("div");
-    timeSlots.forEach((time) => {
-      const slotDiv = document.createElement("div");
-      slotDiv.className = "time-slot";
-      slotDiv.innerHTML = `
-        <span>${time}</span>
-        <button class="reserve-btn">Reserve</button>
-        <button class="view-btn" data-time="${time}">View</button>
-      `;
-      timeSlotContainer.appendChild(slotDiv);
-    });
+  const hasCurrentUserReserved = events.find(event => event.presenter === username);
 
-    popupContent.appendChild(timeSlotContainer);
+  const currentUserPresentation = (await getData('../../server/controller/load-user.php')).presentation;
 
-    // Add event listener to close button
-    document.getElementById("closeBtn").onclick = () => {
-      popup.classList.remove("active");
-    };
+  hours.forEach(hour => {
+    const currentDayTime = new Date(day);
+    currentDayTime.setHours(parseInt(hour.split(':')[0]));
+    currentDayTime.setMinutes(parseInt(hour.split(':')[1]));
+    currentDayTime.setSeconds(0);
 
-    // Add event listener to "View" buttons
-    const viewButtons = popupContent.querySelectorAll(".view-btn");
-    viewButtons.forEach((button) => {
-      button.addEventListener("click", (event) => {
-        const time = event.target.getAttribute("data-time");
-        showSecondaryPopup(day, time);
-      });
-    });
+    const hourRow = document.createElement("div");
+    hourRow.classList.add("hour-row");
 
-    popup.classList.add("active");
-  }
+    const hourLabel = document.createElement("span");
+    hourLabel.textContent = hour;
+    hourRow.appendChild(hourLabel);
 
-  // Show the secondary popup
-  function showSecondaryPopup(day, time) {
-    secondaryPopupContent.innerHTML = `
-      <div class="popup-header">
-        Presentation Details for Day ${day} at ${time} 
-        <button class="close-btn" id="secondaryCloseBtn">Close</button>
-      </div>
-      <div class="details">
-        <label for="name">Име:</label>
-        <input type="text" id="name" placeholder="Enter your name" />
-        
-        <label for="Име в системата">:</label>
-        <input type="text" id="username" placeholder="Enter your username" />
-        
-        <label for="presentation">Тема:</label>
-        <input type="text" id="presentation" placeholder="Enter presentation name" />
-      </div>
-    `;
+    const matchingEvent = events.find(event => areDatesEqual(new Date(event.date), currentDayTime));
 
-    // Add close button behavior for secondary popup
-    document.getElementById("secondaryCloseBtn").onclick = () => {
-      secondaryPopup.classList.remove("active");
-      secondaryPopupContent.innerHTML = ''; // Reset content
-    };
+    const presentationTitleDiv = document.createElement("div");
+    presentationTitleDiv.style.width = '200px';
+    presentationTitleDiv.style.marginLeft = '30px';
+    
+    if (matchingEvent) {
+      presentationTitleDiv.textContent = matchingEvent.presentation_title;
+    }
 
-    secondaryPopup.classList.add("active");
-  }
+    hourRow.appendChild(presentationTitleDiv);
+
+    const reserveButton = document.createElement("button");
+    reserveButton.textContent = "Reserve";
+    reserveButton.onclick = async () => await reserveSlot(currentUserPresentation, username, currentDayTime);
+    reserveButton.style.marginLeft = '60px';
+
+    const isReserveDisabled = !!matchingEvent;
+
+    if (isReserveDisabled || hasCurrentUserReserved || !currentUserPresentation) {
+      reserveButton.setAttribute('disabled', true);
+    }
+
+    hourRow.appendChild(reserveButton);
+
+    const isCancelEnabled = !!events.find(event => areDatesEqual(new Date(event.date), currentDayTime)
+      && username === event.presenter);
+
+    const cancelButton = document.createElement("button");
+    cancelButton.textContent = "Cancel";
+    cancelButton.onclick = async () => await cancelReservation(matchingEvent.presentation_title, username);
+
+    if (!isCancelEnabled) {
+      cancelButton.setAttribute('disabled', true);
+    }
+
+    hourRow.appendChild(cancelButton);
+
+    hourlyReservations.appendChild(hourRow);
+  });
+
+  popup.style.display = "block";
+}
+
+function closePopup() {
+  document.getElementById("popup").style.display = "none";
+}
+
+const reserveSlot = async (currentUserPresentation, username, currentDayTime) => {
+  await sendData('../../server/controller/add_event.php',
+    { presentationTitle: currentUserPresentation,
+      presenter: username,
+      date: formatDate(currentDayTime) })
+      .catch(err => console.log(err));
+
+  location.reload();
+}
+
+const cancelReservation = async (currentUserPresentation, username) => {
+  await sendData('../../server/controller/delete_event.php',
+    { presentationTitle: currentUserPresentation,
+      presenter: username })
+      .catch(err => console.log(err));
+
+  location.reload();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  generateDays();
+
+  const popup = document.getElementById('popup');
+  const closePopup = document.getElementById('close-popup');
+
+  closePopup.addEventListener('click', () => {
+    popup.style.display = 'none';
+  });
+
+  document.getElementById('prev-month').addEventListener('click', () => {
+    const currentMonthDate = document.querySelectorAll(".day")[7].getAttribute('date');
+
+    const newDate = new Date(currentMonthDate);
+    newDate.setMonth(newDate.getMonth() - 1);
+    generateDays(newDate)
+  });
+
+  document.getElementById('next-month').addEventListener('click', () => {
+    const currentMonthDate = document.querySelectorAll(".day")[7].getAttribute('date');
+
+    const newDate = new Date(currentMonthDate);
+    newDate.setMonth(newDate.getMonth() + 1);
+    generateDays(newDate)
+  });
 });

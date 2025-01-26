@@ -12,39 +12,37 @@
   <title>Presentation calendar</title>
   <script defer src="../scripts/utilities.js"></script>
   <script defer src="../scripts/register.js"></script>
+  <script defer src="../scripts/navbar.js"></script>
+  <link rel="stylesheet" href="../styles/navbar.css"/>
+  <link rel="stylesheet" href="../styles/register.css"/>
 </head>
 <body>
-  <nav class="navbar">
-    <a href="./index.php" class="logo">
-      <p class="logo-text">Calendar</p>
-    </a>
-    <ul>
-      <li><a class="links" href="./register.php">Register</a></li>
-      <li><a class="links" href="./login.php">Login</a></li>
-    </ul>
-  </nav>
-  <div id="errors">
-    <p class="error-msg"></p>
-  </div>
+  <?php include '../components/navbar.php'; ?>
+
   <form id="register-form">
-    <p class="form-title">Sign In</p>
-    <div class="form-input">
-      <input type="text" placeholder="First Name" id="first-name"/>
-    </div>
-    <div class="form-input">
-      <input type="text" placeholder="Last Name" id="last-name"/>
-    </div>
-    <div class="form-input">
-      <input type="text" placeholder="Username" id="username"/>
-    </div>
-    </div>
-    <div class="form-input">
-      <input type="password" placeholder="Password" id="password"/>
-    </div>
-    <div class="form-input">
-      <input type="password" placeholder="Repeat Password" id="repeat-password"/>
-    </div>
-    <button id="sign-in-btn" type="submit">SIGN IN</button>
+  <p class="form-title">Register</p>
+  <div class="form-input">
+    <input type="text" placeholder="First Name" id="first-name" />
+    <p class="error-message" id="first-name-error">First Name is required.</p>
+  </div>
+  <div class="form-input">
+    <input type="text" placeholder="Last Name" id="last-name" />
+    <p class="error-message" id="last-name-error">Last Name is required.</p>
+  </div>
+  <div class="form-input">
+    <input type="text" placeholder="Username" id="username" />
+    <p class="error-message" id="username-error">Username is required.</p>
+  </div>
+  <div class="form-input">
+    <input type="password" placeholder="Password" id="password" />
+    <p class="error-message" id="password-error">Password is required.</p>
+  </div>
+  <div class="form-input">
+    <input type="password" placeholder="Repeat Password" id="repeat-password" />
+    <p class="error-message" id="repeat-password-error">Passwords must match.</p>
+  </div>
+  <button id="register-button" type="submit">SIGN IN</button>
 </form>
+
 </body>
 </html>

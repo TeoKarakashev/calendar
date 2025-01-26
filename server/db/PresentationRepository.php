@@ -13,17 +13,17 @@
 
             $type = $config['db']['db_type'];
             $host = $config['db']['host'];
+            $port = $config['db']['port'];
             $name = $config['db']['db_name'];
             $user = $config['db']['user'];
             $password = $config['db']['password'];
 
-
-            $this->init($type, $host, $name, $user, $password);
+            $this->init($type, $host, $port, $name, $user, $password);
         }
 
-        private function init($type, $host, $name, $user, $password) {
+        private function init($type, $host, $port, $name, $user, $password) {
             try {
-                $this->connection = new PDO("$type:host=$host;dbname=$name", $user, $password);
+                $this->connection = new PDO("$type:host=$host;port=$port;dbname=$name", $user, $password);
 
                 $this->prepareStatements();
             } catch (PDOException $e) {

@@ -7,17 +7,13 @@
     <script src="../scripts/utilities.js"></script>
     <script src="../scripts/presentations.js"></script>
     <script src="../scripts/logout.js"></script>
+    <script defer src="../scripts/navbar.js"></script>
     <link rel="stylesheet" href="../styles/presentations.css">
+    <link rel="stylesheet" href="../styles/navbar.css"/>
 </head>
 <body onload="loadPresentations()">
-    <nav class="navbar">
-    <ul>
-    <li><a class="links" id="logout-btn" onclick="logout(event)">Logout</a></li>
-      <li><a class="links" id="interests-btn" href="./interests.php">Interests</a></li>
-      <li><a class="links" id="my-profile-btn" href="./my-profile.php">My Profile</a></li>
-      <li><a class="links" id="presentation-btn" href="./presentations.php">Presentations</a></li>
-    </ul>
-    </nav>
+  <?php include '../components/navbar.php'; ?>
+
     <h1>Презентации</h1>
 
     <!-- Recommended Presentations Dropdown -->

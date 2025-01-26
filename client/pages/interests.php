@@ -10,18 +10,12 @@
   <script src="../scripts/utilities.js"></script>
   <script src="../scripts/index.js"></script>
   <script src="../scripts/logout.js"></script>
-  
-  
+  <script defer src="../scripts/navbar.js"></script>
+  <link rel="stylesheet" href="../styles/navbar.css"/>
 </head>
 <body onload="loadInterests()">
-  <nav class="navbar">
-    <ul>
-    <li><a class="links" id="logout-btn" onclick="logout(event)">Logout</a></li>
-      <li><a class="links" id="interests-btn" href="./interests.php">Interests</a></li>
-      <li><a class="links" id="my-profile-btn" href="./my-profile.php">My Profile</a></li>
-      <li><a class="links" id="presentation-btn" href="./presentations.php">Presentations</a></li>
-    </ul>
-  </nav>
+<?php include '../components/navbar.php'; ?>
+  
   <div id="content">
   <form id="interests-form"></form>
   <button id="update-btn" type="submit">Update</button>

@@ -1,44 +1,99 @@
 const form = document.getElementById('register-form');
-const registerBtn = document.getElementById('sign-in-btn');
+const registerBtn = document.getElementById('register-button');
 
 form.onsubmit = (e) => {
   e.preventDefault();
 }
 
-registerBtn.onclick = () => {
-  let firstName = document.getElementById('first-name').value;
-  let lastName = document.getElementById('last-name').value;
-  let username = document.getElementById('username').value;
-  let password = document.getElementById('password').value;
-  let confirmPassword = document.getElementById('repeat-password').value;
+registerBtn.addEventListener('click', () => {
+  const firstName = document.getElementById("first-name").value;
+  const lastName = document.getElementById("last-name").value;
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+  const repeatPassword = document.getElementById("repeat-password").value;
 
-  
-  let user = { firstName, lastName, username, password, confirmPassword };
+  const firstNameError = document.getElementById("first-name-error");
+  const lastNameError = document.getElementById("last-name-error");
+  const usernameError = document.getElementById("username-error");
+  const passwordError = document.getElementById("password-error");
+  const repeatPasswordError = document.getElementById("repeat-password-error");
 
-  
+  let isValid = true;
+
+  // Validate first name
+  if (!firstName.trim()) {
+    firstNameError.style.display = "block";
+    isValid = false;
+  } else {
+    firstNameError.style.display = "none";
+  }
+
+  // Validate last name
+  if (!lastName.trim()) {
+    lastNameError.style.display = "block";
+    isValid = false;
+  } else {
+    lastNameError.style.display = "none";
+  }
+
+  // Validate username
+  if (!username.trim()) {
+    usernameError.style.display = "block";
+    isValid = false;
+  } else {
+    usernameError.style.display = "none";
+  }
+
+  // Validate password
+  if (!password.trim()) {
+    passwordError.style.display = "block";
+    isValid = false;
+  } else {
+    passwordError.style.display = "none";
+  }
+
+  // Validate repeat password
+  if (password.trim() !== repeatPassword.trim()) {
+    repeatPasswordError.style.display = "block";
+    isValid = false;
+  } else {
+    repeatPasswordError.style.display = "none";
+  }
+
+  let user = { firstName, lastName, username, password, confirmPassword: repeatPassword };
+
   sendData('../../server/controller/register.php', user)
-  .then(response => {
+  .then(async response => {
     load(response);
+    const username = (await getData('../../server/controller/index.php')).user;
+    localStorage.setItem('username', username);
     location.href = './index.php';
   })
   .catch(err => {
     showErrors(err);
   });
-}
+});
 
-function load(response) {
-  let errors = document.getElementById('errors');
-  errors.innerHTML = '';
-  errors.style.display = 'none';
+function load() {
+  const firstNameError = document.getElementById("first-name-error");
+  const lastNameError = document.getElementById("last-name-error");
+  const usernameError = document.getElementById("username-error");
+  const passwordError = document.getElementById("password-error");
+  const repeatPasswordError = document.getElementById("repeat-password-error");
+  firstNameError.style.display = 'none';
+  lastNameError.style.display = 'none';
+  usernameError.style.display = 'none';
+  passwordError.style.display = 'none';
+  repeatPasswordError.style.display = 'none';
 }
 
 function handleError(error) {
-  let errors = document.getElementById('errors');
+  let errors = document.getElementById('repeat-password-error');
 
   errors.style.display = 'block';
   errors.style.color = 'red';
 
-  errors.innerHTML = error['message'];
+  errors.innerHTML = error && error.message;
 }
 
 function showErrors(errors) {

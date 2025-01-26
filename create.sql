@@ -113,3 +113,10 @@ INSERT INTO presentation_interests (title, interest)
     ('Създаване на автономни роботи', 'Роботика'), ('Създаване на автономни роботи', 'AI'),
     ('5G мрежи и приложения', '5G'), ('5G мрежи и приложения', 'Wireless'),
     ('Безжични комуникационни системи', 'Wireless'), ('Безжични комуникационни системи', '5G');
+
+CREATE TABLE presentation_events (
+	id INT PRIMARY KEY,
+	presentation_title VARCHAR(255) NOT NULL,
+	presenter VARCHAR(255) NOT NULL,
+	date DATETIME NOT NULL
+);
