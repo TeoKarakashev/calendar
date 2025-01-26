@@ -15,24 +15,28 @@ loginBtn.onclick = () => {
   };
 
   function showErrors(errorMessage) {
-    var errors = document.getElementById('errors');
+    var errors = document.getElementById('password-error');
     errors.style.display = 'block';
     errors.style.color = 'red';
     errors.innerHTML = errorMessage;
 }
 
-  function load(response) {
-    var errors = document.getElementById('errors');
+  function load() {
+    var errors = document.getElementById('password-error');
     errors.innerHTML = '';
     errors.style.display = 'none';
 }
 
   sendData('../../server/controller/login.php', user)
-  .then(response => {
+  .then(async response => {
     load(response);
+    const username = (await getData('../../server/controller/index.php')).user;
+    localStorage.setItem('username', username);
     location.href = './index.php';
   })
   .catch(err => {
-    showErrors(err.message);
+    if (err) {
+      showErrors(err.message);
+    }
   });
 }

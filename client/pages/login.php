@@ -14,14 +14,23 @@
   <title>Calendar</title>
   <script defer src="../scripts/utilities.js"></script>
   <script defer src="../scripts/login.js"></script>
+  <link rel="stylesheet" href="../styles/navbar.css"/>
+  <link rel="stylesheet" href="../styles/login.css"/>
+  <script defer src="../scripts/navbar.js"></script>
 </head>
 <body>
-<nav class="navbar">
+  <nav class="navbar">
     <ul>
-      <li><a class="links" href="./register.php">Register</a></li>
-      <li><a class="links" href="./login.php">Login</a></li>
+    <li><a class="links" id="home-btn" href="./index.php">Home</a></li>
+      <li><a class="links" id="interests-btn" href="./interests.php">Interests</a></li>
+      <li><a class="links" id="my-profile-btn" href="./my-profile.php">My Profile</a></li>
+      <li><a class="links" id="presentation-btn" href="./presentations.php">Presentations</a></li>
+      <li><a class="links" id="sign-in-btn" href="./register.php">Register</a></li>
+      <li><a class="links" id="sign-up-btn" href="./login.php">Login</a></li>
+      <li><a class="links" id="logout-btn" onclick="logout(event)">Logout</a></li>
     </ul>
   </nav>
+  
   <div id="errors">
     <p class="error-msg"></p>
   </div>
@@ -32,8 +41,9 @@
     </div>
     <div class="login-form-input">
       <input type="password" placeholder="Password" id="password"/>
+      <p class="error-message" id="password-error"></p>
     </div>
     <button id="login-btn" type="submit">Login</button>
-  </div>
+  </form>
 </body>
 </html>
