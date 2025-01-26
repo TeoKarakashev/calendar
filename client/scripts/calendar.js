@@ -122,7 +122,7 @@ const openPopup = async (day) => {
 
     const cancelButton = document.createElement("button");
     cancelButton.textContent = "Cancel";
-    cancelButton.onclick = async () => await cancelReservation(currentUserPresentation, username);
+    cancelButton.onclick = async () => await cancelReservation(matchingEvent.presentation_title, username);
 
     if (!isCancelEnabled) {
       cancelButton.setAttribute('disabled', true);
