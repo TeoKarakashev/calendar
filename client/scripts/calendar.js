@@ -90,17 +90,32 @@ const openPopup = async (day) => {
 
     const hourLabel = document.createElement("span");
     hourLabel.textContent = hour;
+    hourRow.appendChild(hourLabel);
+
+    const matchingEvent = events.find(event => areDatesEqual(new Date(event.date), currentDayTime));
+
+    const presentationTitleDiv = document.createElement("div");
+    presentationTitleDiv.style.width = '200px';
+    presentationTitleDiv.style.marginLeft = '30px';
+    
+    if (matchingEvent) {
+      presentationTitleDiv.textContent = matchingEvent.presentation_title;
+    }
+
+    hourRow.appendChild(presentationTitleDiv);
 
     const reserveButton = document.createElement("button");
     reserveButton.textContent = "Reserve";
     reserveButton.onclick = async () => await reserveSlot(currentUserPresentation, username, currentDayTime);
     reserveButton.style.marginLeft = '60px';
 
-    const isReserveDisabled = !!events.find(event => areDatesEqual(new Date(event.date), currentDayTime));
+    const isReserveDisabled = !!matchingEvent;
 
     if (isReserveDisabled || hasCurrentUserReserved || !currentUserPresentation) {
       reserveButton.setAttribute('disabled', true);
     }
+
+    hourRow.appendChild(reserveButton);
 
     const isCancelEnabled = !!events.find(event => areDatesEqual(new Date(event.date), currentDayTime)
       && username === event.presenter);
@@ -113,8 +128,6 @@ const openPopup = async (day) => {
       cancelButton.setAttribute('disabled', true);
     }
 
-    hourRow.appendChild(hourLabel);
-    hourRow.appendChild(reserveButton);
     hourRow.appendChild(cancelButton);
 
     hourlyReservations.appendChild(hourRow);
