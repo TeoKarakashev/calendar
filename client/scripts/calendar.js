@@ -98,7 +98,7 @@ const openPopup = async (day) => {
 
     const isReserveDisabled = !!events.find(event => areDatesEqual(new Date(event.date), currentDayTime));
 
-    if (isReserveDisabled || hasCurrentUserReserved) {
+    if (isReserveDisabled || hasCurrentUserReserved || !currentUserPresentation) {
       reserveButton.setAttribute('disabled', true);
     }
 
