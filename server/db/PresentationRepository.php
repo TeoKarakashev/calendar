@@ -1,6 +1,7 @@
 <?php
     class PresentationRepository {
         private $connection;
+        private $getAllPresentations;
         private $getAllUntakenRecommendedPresentations;
         private $getAllUntakenPresentations;
         private $removeUserFromPresentation;
@@ -32,6 +33,10 @@
         }
 
         private function prepareStatements() {
+            $sql = "SELECT *
+                FROM presentations";
+            $this->getAllPresentations = $this->connection->prepare($sql);
+
             $sql = "SELECT p.title
                 FROM presentations p
                 JOIN presentation_interests pi ON p.title = pi.title
@@ -63,6 +68,15 @@
 
         }
         
+        public function getAllPresentations() {
+            try {
+                $this->getAllPresentations->execute();
+                
+                return ["success" => true, "data" => $this->getAllPresentations];
+            } catch (PDOException $e) {
+                return ["success" => false, "error" => $e->getMessage()];
+            }
+        }
 
         public function getAllUntakenRecommendedPresentationsQuery($data) {
             try {

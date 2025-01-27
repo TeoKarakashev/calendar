@@ -11,6 +11,7 @@ class PresentationOrchestrator {
         $this->username = '';
         $this->isTaken = false;
         $this->title = '';
+        
         $this->presentationRepository = new PresentationRepository();
     }
 
@@ -23,6 +24,30 @@ class PresentationOrchestrator {
    }
    public function getUsername() {
     return $this->username;
+   }
+
+   public function getAllPresentations() {
+    try {
+        $selectPresentations =  $this->presentationRepository->getAllPresentations();
+        if($selectPresentations['success']){
+            $presentationData = $selectPresentations['data']->fetchAll(PDO::FETCH_ASSOC);
+            $allPresentations = [];
+            foreach ($presentationData as $presentation) {
+                $allPresentations[] = [
+                    'username' => $presentation['username'],
+                    'is_taken' => (bool)$presentation['is_taken'],
+                    'title' => $presentation['title']
+                ];
+            }
+            return $allPresentations;
+        } else{
+            return [];
+        }
+    } catch (Exception $e) {
+        // Handle exceptions (e.g., database errors)
+        error_log("Error fetching presentations: " . $e->getMessage());
+        return [];
+    }
    }
 
    public function getAllUntakenRecommendedPresentations($data){
@@ -59,8 +84,11 @@ class PresentationOrchestrator {
     $selectPresentation = $this->presentationRepository->getPresentationForUserQuery($data);
     if($selectPresentation['success']){
         $presentationData = $selectPresentation['data']->fetchAll(PDO::FETCH_ASSOC);
-        $presentation =  array_column($presentationData, 'title')[0];
-        return $presentation;
+        if(empty($presentationData)) {
+            return '';
+        } else {
+            return array_column($presentationData, 'title')[0];
+        }
     } else{
         return '';
     }
