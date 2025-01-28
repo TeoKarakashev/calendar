@@ -20,7 +20,6 @@ registerBtn.addEventListener('click', () => {
 
   let isValid = true;
 
-  // Validate first name
   if (!firstName.trim()) {
     firstNameError.style.display = "block";
     isValid = false;
@@ -28,7 +27,6 @@ registerBtn.addEventListener('click', () => {
     firstNameError.style.display = "none";
   }
 
-  // Validate last name
   if (!lastName.trim()) {
     lastNameError.style.display = "block";
     isValid = false;
@@ -36,7 +34,6 @@ registerBtn.addEventListener('click', () => {
     lastNameError.style.display = "none";
   }
 
-  // Validate username
   if (!username.trim()) {
     usernameError.style.display = "block";
     isValid = false;
@@ -44,7 +41,6 @@ registerBtn.addEventListener('click', () => {
     usernameError.style.display = "none";
   }
 
-  // Validate password
   if (!password.trim()) {
     passwordError.style.display = "block";
     isValid = false;
@@ -52,8 +48,7 @@ registerBtn.addEventListener('click', () => {
     passwordError.style.display = "none";
   }
 
-  // Validate repeat password
-  if (password.trim() !== repeatPassword.trim()) {
+  if (!repeatPassword.trim() || password.trim() !== repeatPassword.trim()) {
     repeatPasswordError.style.display = "block";
     isValid = false;
   } else {
@@ -70,7 +65,8 @@ registerBtn.addEventListener('click', () => {
     location.href = './index.php';
   })
   .catch(err => {
-    showErrors(err);
+    console.log(err);
+    //showErrors(err);
   });
 });
 

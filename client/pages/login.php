@@ -11,7 +11,7 @@
 <html>
 <head>
   <meta charset="utf-8"/>
-  <title>Calendar</title>
+  <title>Календар</title>
   <script defer src="../scripts/utilities.js"></script>
   <script defer src="../scripts/login.js"></script>
   <link rel="stylesheet" href="../styles/navbar.css"/>
@@ -22,15 +22,16 @@
   <?php include '../components/navbar.php'; ?>
 
   <form id="login-form">
-    <p class="form-title">Login</p>
+    <p class="form-title">Вход</p>
     <div class="login-form-input">
-      <input type="text" placeholder="Username" id="username"/>
+      <input type="text" placeholder="Потребителско име" id="username"/>
+      <p class="error-message" id="username-error">Потребителското име е задължително поле.</p>
     </div>
     <div class="login-form-input">
-      <input type="password" placeholder="Password" id="password"/>
-      <p class="error-message" id="password-error"></p>
+      <input type="password" placeholder="Парола" id="password"/>
+      <p class="error-message" id="password-error">Паролата е задължително поле.</p>
     </div>
-    <button id="login-btn" type="submit">Login</button>
+    <button id="login-btn" type="submit">Вход</button>
   </form>
 </body>
 </html>
