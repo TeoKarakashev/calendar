@@ -9,16 +9,15 @@
   <script src="../scripts/my-profile.js"></script>
   <script defer src="../scripts/navbar.js"></script>
   <link rel="stylesheet" href="../styles/navbar.css"/>
+  <link rel="stylesheet" href="../styles/my-profile.css"/>
 </head>
 <body onload="loadSessionMyProfile()">
     <?php include '../components/navbar.php'; ?>
 
     <div id="content">
       <div id="profile">
-        <p id="profile-title">My Profile</p>
         <div id="profile-info">
-          <p id="first-name">First Name: </p>
-          <p id="last-name">Last Name: </p>
+          <p id="name">First name -- last name </p>
           <p id="username">Username: </p>
           <p id="interests">Interests: </p>
           <p id="presentation">Presentation: </p>
