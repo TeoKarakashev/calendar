@@ -9,9 +9,10 @@ window.addEventListener('DOMContentLoaded', () => {
         let searchField = document.getElementById('search-field');
         const query = searchField.value.trim();
         if (query) {
-            filteredInterests = allInterests.filter(interest =>
-                interest.title.toLowerCase().includes(query.toLowerCase())
+            filteredInterests = allInterests.filter(currInterest => 
+                currInterest.toLowerCase().includes(query.toLowerCase())
             );
+            
             displayInterests(filteredInterests);
         } else {
             displayInterests(allInterests);
