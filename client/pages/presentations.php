@@ -16,11 +16,16 @@
 
     <h1>Презентации</h1>
 
-    <!-- Recommended Presentations Dropdown -->
-    <label for="recommended">Tеми за презентации</label>
-    <select id="presentations" name="presentations">
-    </select>
-    <button id="update-btn" type="submit">Update</button>
-    <p id="current">Текуща избрана презентация: </p>
+    <input type="text" id="search-field" class="search-field" placeholder="Search">
+
+    <div class="card" id="presentations" name="presentations" tabindex="0">
+      <div class="details">
+        <div id="name">Name: </div>
+        <div id="interests"></div>
+        <div id="presenter">Presenter: </div>
+        <div>Date: </div>
+        <div><button class="assign-button" id="update-btn" type="submit">Assign</button></div>
+      </div>
+    </div>
 </body>
 </html>

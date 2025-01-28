@@ -5,29 +5,96 @@ body {
 }
 
 h1 {
-    color: #333;
+    color: #007BFF;
     margin-bottom: 20px;
+    text-align: center;
+    font-size: 40px;
+    margin: 30px 0;
 }
 
-label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 5px;
-}
+.presentation {
+    background-color: #f9f9f9;
 
-select {
-    width: 100%;
-    max-width: 400px;
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px 15px;
+    margin: 10px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.presentation:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+#presentations {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.details {
+    display: flex;
+    font-size: 16px;
+    color: #333;
+}
+
+.name {
+    width: 250px;
+}
+
+.presenter {
+    width: 150px;
+}
+
+.interests {
+    width: 250px;
+}
+
+.date {
+    width: 150px;
+}
+
+.details > div {
+    display: block;
+    text-align: left;
+}
+
+.assign-button {
+    background-color: #007bff;
+    color: #fff;
+    width: 100px;
+    border: none;
     border-radius: 5px;
-    background-color: #fff;
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.assign-button:hover {
+    background-color: #0056b3;
+}
+
+.search-field {
+    width: 500px;
+    display: block;
+    margin: 0 auto;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 8px 10px;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     font-size: 16px;
 }
 
-select:focus {
-    outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+.search-field::placeholder {
+    color: #999;
 }
