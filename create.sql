@@ -115,7 +115,7 @@ INSERT INTO presentation_interests (title, interest)
     ('Безжични комуникационни системи', 'Wireless'), ('Безжични комуникационни системи', '5G');
 
 CREATE TABLE presentation_events (
-	id INT PRIMARY KEY,
+	id INT AUTO_INCREMENT PRIMARY KEY,
 	presentation_title VARCHAR(255) NOT NULL,
 	presenter VARCHAR(255) NOT NULL,
 	date DATETIME NOT NULL
