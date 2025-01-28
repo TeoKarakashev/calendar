@@ -18,7 +18,7 @@ const generateDays = (dateParam = new Date()) => {
 
   daysContainer.querySelectorAll(".day").forEach((day) => day.remove());
 
-  const monthName = new Date(year, month).toLocaleString("default", { month: "long" });
+  const monthName = new Date(year, month).toLocaleString("bg-BG", { month: "long" });
   monthYearTitle.textContent = `${monthName} ${year}`;
 
   const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -105,7 +105,7 @@ const openPopup = async (day) => {
     hourRow.appendChild(presentationTitleDiv);
 
     const reserveButton = document.createElement("button");
-    reserveButton.textContent = "Reserve";
+    reserveButton.textContent = "Резервирай";
     reserveButton.onclick = async () => await reserveSlot(currentUserPresentation, username, currentDayTime);
     reserveButton.style.marginLeft = '60px';
 
@@ -121,7 +121,7 @@ const openPopup = async (day) => {
       && username === event.presenter);
 
     const cancelButton = document.createElement("button");
-    cancelButton.textContent = "Cancel";
+    cancelButton.textContent = "Отказ";
     cancelButton.onclick = async () => await cancelReservation(matchingEvent.presentation_title, username);
 
     if (!isCancelEnabled) {

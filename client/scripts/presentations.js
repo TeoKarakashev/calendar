@@ -88,7 +88,7 @@ function displayPresentations(presentationsData) {
                     if (!presentation.is_taken) {
                         const assignButton = document.createElement('button');
                         assignButton.classList.add("assign-button");
-                        assignButton.textContent = "Assign";
+                        assignButton.textContent = "Избери";
                         assignButton.addEventListener('click', (e) => {
                                 e.preventDefault();
                                 updatePresentation(presentation.title);

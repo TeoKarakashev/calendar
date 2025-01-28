@@ -6,13 +6,13 @@
     </div>
     <div class="calendar-grid">
 
-      <div class="day-label">Sun</div>
-      <div class="day-label">Mon</div>
-      <div class="day-label">Tue</div>
-      <div class="day-label">Wed</div>
-      <div class="day-label">Thu</div>
-      <div class="day-label">Fri</div>
-      <div class="day-label">Sat</div>
+      <div class="day-label">Нд</div>
+      <div class="day-label">Пн</div>
+      <div class="day-label">Вт</div>
+      <div class="day-label">Ср</div>
+      <div class="day-label">Чт</div>
+      <div class="day-label">Пт</div>
+      <div class="day-label">Сб</div>
     </div>
   </div>
 

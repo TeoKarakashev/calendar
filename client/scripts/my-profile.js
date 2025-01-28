@@ -10,11 +10,9 @@ function loadSessionMyProfile() {
             username.textContent = `${response['username']}`;
             presentation.textContent = `Избрана презентация: ${response['presentation']}`;
 
-            // Изчистваме съществуващите интереси
             interests.innerHTML = "Интереси:";
             
             if (Array.isArray(response['interests'])) {
-                // Създаваме списък
                 let ul = document.createElement('ul');
                 response['interests'].forEach(interest => {
                     let li = document.createElement('li');
