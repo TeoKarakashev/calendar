@@ -12,7 +12,14 @@
             $result = $this->presentationInterestsRepository->getPresentationInterests();
 
             if($result['success']) {
-                $presentationInterests = $result['data']->fetchAll(PDO::FETCH_ASSOC);
+                $presentationInterestsData = $result['data']->fetchAll(PDO::FETCH_ASSOC);
+                $presentationInterests = [];
+                foreach ($presentationInterestsData as $presInterest) {
+                    $presentationInterests[] = [
+                        'title' => $presInterest['title'],
+                        'interest' => $presInterest['interest']
+                    ];
+                }
                 return $presentationInterests;
             } else {
                 return [];

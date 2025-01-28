@@ -51,16 +51,20 @@ label {
 }
 
 .name {
-    width: 300px;
+    width: 250px;
 }
 
 .presenter {
-    width: 100px;
+    width: 150px;
 }
 
-/* .date {
-    width: 300px;
-} */
+.interests {
+    width: 250px;
+}
+
+.date {
+    width: 150px;
+}
 
 .details > div {
     display: block;
@@ -70,6 +74,7 @@ label {
 .assign-button {
     background-color: #007bff;
     color: #fff;
+    width: 100px;
     border: none;
     border-radius: 5px;
     padding: 8px 15px;

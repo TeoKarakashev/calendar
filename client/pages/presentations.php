@@ -24,6 +24,7 @@
     <div class="card" id="presentations" name="presentations" tabindex="0">
       <div class="details">
         <div id="name">Name: </div>
+        <div id="interests"></div>
         <div id="presenter">Presenter: </div>
         <div>Date: </div>
         <div><button class="assign-button" id="update-btn" type="submit">Assign</button></div>
