@@ -19,6 +19,8 @@
   
   <h1>Интереси</h1>
 
+  <input type="text" id="search-field" class="search-field" placeholder="Search">
+
   <div id="interest-container">
     <div class="inner-container">
       <div id="interest"></div>
