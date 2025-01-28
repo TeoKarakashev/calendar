@@ -1,3 +1,25 @@
+window.addEventListener('DOMContentLoaded', loadPresentations());
+window.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('search-field').addEventListener('input', () => {
+        let searchField = document.getElementById('search-field');
+        const query = searchField.value.trim();
+        if (query) {
+            console.log(query);
+            filteredPresentations = allPresentationsData.filter(presentation =>
+                presentation.title.toLowerCase().includes(query.toLowerCase())
+            );
+            console.log(filteredPresentations);
+            displayPresentations(filteredPresentations);
+        } else {
+            displayPresentations(allPresentationsData);
+        }
+    });
+});
+
+let searchField = document.getElementById('search-field');
+let allPresentationsData = [];
+let filteredPresentations = [];
+
 function loadPresentations() {
     getData('../../server/controller/presentation.php')
         .then(response => {
@@ -7,23 +29,25 @@ function loadPresentations() {
             console.log(response['current']);
             current.textContent = `Текуща избрана презентация: ${response['current']}`;
 
-            //const recommendedPresentationsData = response['recommended'];
-            const allPresentationsData = response['all'];
+            allPresentationsData = response['all'];
+            displayPresentations(allPresentationsData);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
 
+function displayPresentations(presentationsData) {
+            //const recommendedPresentationsData = response['recommended'];
+            let presentationDiv = document.getElementById('presentations'); 
             
             presentationDiv.innerHTML = '';
             presentationDiv.className = '';
-            // let allPresentations = document.createElement('div');
-            // allPresentations.textContent = 'Всички теми';
-            // allPresentations.disabled = false;
-            // presentationDiv.appendChild(allPresentations);
 
-            if (allPresentationsData.length > 0) {
-                allPresentationsData.forEach(presentation => {
+            if (presentationsData.length > 0) {
+                presentationsData.forEach(presentation => {
                     console.log(presentation);
 
-                    // const card = document.createElement('div');
-                    // presentationDiv.classList.add("presentation");
                     const details = document.createElement('div');
                     details.classList.add("presentation");
 
@@ -33,6 +57,7 @@ function loadPresentations() {
                     details.appendChild(name);
 
                     if (presentation.is_taken) {
+
                         const presenter = document.createElement('div');
                         presenter.textContent = `Presenter: ${presentation.username}`;
                         presenter.classList.add("presenter");
@@ -58,49 +83,9 @@ function loadPresentations() {
                     presentationDiv.appendChild(details);
                 });
             }
-
-            // let recommendedPresentations = document.createElement('option');
-            // recommendedPresentations.textContent = 'Препоръчани теми';
-            // recommendedPresentations.disabled = true; 
-            // presentationSelect.appendChild(recommendedPresentations);
-
-            // if (recommendedPresentationsData.length > 0) {
-            //     recommendedPresentationsData.forEach(presentation => {
-            //         let option = document.createElement('option');
-            //         option.value = presentation;
-            //         option.textContent = presentation;
-            //         presentationSelect.appendChild(option);
-            //     });
-            // }
-
-            // let remainingOption = document.createElement('option');
-            // remainingOption.textContent = 'останали презентации';
-            // remainingOption.disabled = true; 
-            // presentationSelect.appendChild(remainingOption);
-
-            // const filteredPresentations = allPresentationsData.filter(presentation => 
-            //     !recommendedPresentationsData.includes(presentation)
-            // );
-
-            // if (filteredPresentations.length > 0) {
-            //     filteredPresentations.forEach(presentation => {
-            //         let option = document.createElement('option');
-            //         option.value = presentation;
-            //         option.textContent = presentation;
-            //         presentationSelect.appendChild(option);
-            //     });
-            // }
-        })
-        .catch(err => {
-            console.log(err);
-        });
 }
 
-
 function updatePresentation(selectedPresentation) {
-    // const select = document.getElementById('presentations');
-    
-    // const selectedPresentation = select.value;
     console.log(selectedPresentation);
 
     const data = {

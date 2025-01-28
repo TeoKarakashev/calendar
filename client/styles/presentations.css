@@ -46,9 +46,6 @@ label {
 
 .details {
     display: flex;
-    /* grid-template-columns: 1fr 1fr; */
-    /* gap: 20px; */
-    /* flex-grow: 1; */
     font-size: 16px;
     color: #333;
 }
@@ -82,4 +79,20 @@ label {
 
 .assign-button:hover {
     background-color: #0056b3;
+}
+
+.search-field {
+    width: 500px;
+    display: block;
+    margin: 0 auto;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 8px 10px;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+}
+
+.search-field::placeholder {
+    color: #999;
 }

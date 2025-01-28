@@ -16,9 +16,11 @@
 
     <h1>Презентации</h1>
 
-    <!-- Recommended Presentations Dropdown -->
     <label for="all">Tеми за презентации</label>
     <p id="current">Текуща избрана презентация: </p>
+
+    <input type="text" id="search-field" class="search-field" placeholder="Search">
+
     <div class="card" id="presentations" name="presentations" tabindex="0">
       <div class="details">
         <div id="name">Name: </div>
@@ -27,6 +29,5 @@
         <div><button class="assign-button" id="update-btn" type="submit">Assign</button></div>
       </div>
     </div>
-    <!-- <button id="update-btn" type="submit">Update</button> -->
 </body>
 </html>
