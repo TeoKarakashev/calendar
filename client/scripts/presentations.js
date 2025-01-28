@@ -26,10 +26,7 @@ function loadPresentations() {
             presentationInterests = (await getData('../../server/controller/get_presentationInterests.php')).data;
             events = (await getData('../../server/controller/get_events.php')).data;
 
-            let presentationDiv = document.getElementById('presentations'); 
-            let current = document.getElementById('current');
-
-            current.textContent = `Текуща избрана презентация: ${response['current']}`;
+            let presentationDiv = document.getElementById('presentations');
 
             allPresentationsData = response['all'];
             displayPresentations(allPresentationsData);

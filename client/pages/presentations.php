@@ -16,9 +16,6 @@
 
     <h1>Презентации</h1>
 
-    <label for="all">Tеми за презентации</label>
-    <p id="current">Текуща избрана презентация: </p>
-
     <input type="text" id="search-field" class="search-field" placeholder="Search">
 
     <div class="card" id="presentations" name="presentations" tabindex="0">
