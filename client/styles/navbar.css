@@ -1,58 +1,51 @@
-/* Navbar container */
 .navbar {
-    background-color: #007BFF; /* Bright blue */
-    padding: 1rem;
-    display: flex;
-    justify-content: flex-end; /* Align items to the right */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Unordered list styling */
-  .navbar ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    gap: 1rem; /* Space between list items */
-  }
-  
-  /* Links styling */
-  .navbar .links {
-    text-decoration: none;
-    color: #FFFFFF; /* White text */
-    font-weight: bold;
-    transition: color 0.3s, background-color 0.3s;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-  }
-  
-  /* Hover effects for links */
-  .navbar .links:hover {
-    background-color: #0056b3; /* Darker blue */
-    color: #e0e0e0; /* Light gray text */
-  }
-  
-  /* Active or focus state for links */
-  .navbar .links:active,
-  .navbar .links:focus {
-    background-color: #004085; /* Even darker blue */
-    outline: none;
-  }
-  
-  /* Special styles for logout button (if needed) */
-  #logout-btn {
-    background-color: #dc3545; /* Red for emphasis */
-    color: #FFFFFF;
-    border-radius: 4px;
-    padding: 0.5rem 1rem;
-  }
-  
-  #logout-btn:hover {
-    background-color: #a71d2a; /* Darker red */
-  }
+  background-color: #007BFF;
+  padding: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-  #home-btn {
-    display: inline-block;
-    justify-self: flex-start;
-  }
-  
+.navbar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 1rem;
+}
+
+.navbar .links {
+  text-decoration: none;
+  color: #FFFFFF;
+  font-weight: bold;
+  transition: color 0.3s, background-color 0.3s;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+}
+
+.navbar .links:hover {
+  background-color: #0056b3;
+  color: #e0e0e0;
+}
+
+.navbar .links:active,
+.navbar .links:focus {
+  background-color: #004085;
+  outline: none;
+}
+
+#logout-btn {
+  background-color: #dc3545;
+  color: #FFFFFF;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+}
+
+#logout-btn:hover {
+  background-color: #a71d2a;
+}
+
+#home-btn {
+  display: inline-block;
+  justify-self: flex-start;
+}

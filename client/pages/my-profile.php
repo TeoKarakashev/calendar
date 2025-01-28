@@ -17,10 +17,10 @@
     <div id="content">
       <div id="profile">
         <div id="profile-info">
-          <p id="name">First name -- last name </p>
-          <p id="username">Username: </p>
-          <p id="interests">Interests: </p>
-          <p id="presentation">Presentation: </p>
+          <p id="name"></p>
+          <p id="username"></p>
+          <p id="interests"></p>
+          <p id="presentation"></p>
         </div>
       </div>
 </body>

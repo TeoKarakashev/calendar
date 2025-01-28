@@ -1,82 +1,78 @@
-/* Center the form on the screen */
 #login-form {
-    background-color: #57a8ff; /* Blue background */
-    color: #FFFFFF; /* White text */
-    width: 40%; /* 40% of the screen width */
-    margin: 0 auto; /* Center horizontally */
-    padding: 2rem; /* Add some padding inside */
-    border-radius: 12px; /* Curved corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add some depth */
-    text-align: center; /* Center align text and elements */
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* Center the form vertically and horizontally */
-  }
-  
-  /* Style the form title */
-  #login-form .form-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 1.5rem;
-    text-transform: uppercase;
-    padding: 0;
-    margin: 0 0 20px 0;
-  }
+  background-color: #57a8ff;
+  color: #FFFFFF;
+  width: 40%;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
-  /* Style for error message */
-  .error-message {
-    color: #dc3545; /* Red color */
-    font-size: 0.875rem; /* Slightly smaller font */
-    margin: 2px 0; /* Add some space from the input */
-    display: none; /* Hidden by default */
+
+#login-form .form-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin: 2px 0;
+  display: none;
+}
+
+
+.login-form-input input {
+  width: 90%;
+  padding: 0.75rem;
+  margin: 5px 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.login-form-input input:focus {
+  border: 2px solid #0056b3;
+  background-color: #f8f9fa;
+}
+
+
+#login-btn {
+  background-color: #0056b3;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  margin-top: 15px;
+}
+
+
+#login-btn:hover {
+  background-color: #003f7f;
+}
+
+#login-btn:active {
+  transform: scale(0.98);
+}
+
+@media (max-width: 768px) {
+  #login-form {
+    width: 90%;
   }
-  
-  /* Style the input fields */
-  .login-form-input input {
-    width: 90%; /* Full width with padding */
-    padding: 0.75rem;
-    margin: 5px 0;
-    border: none;
-    border-radius: 8px; /* Rounded input fields */
-    font-size: 1rem;
-    outline: none;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Add hover and focus effects for inputs */
-  .login-form-input input:focus {
-    border: 2px solid #0056b3; /* Darker blue on focus */
-    background-color: #f8f9fa; /* Light background */
-  }
-  
-  /* Style the login button */
-  #login-btn {
-    background-color: #0056b3; /* Darker blue button */
-    color: #FFFFFF;
-    border: none;
-    border-radius: 8px;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    margin-top: 15px;
-  }
-  
-  /* Hover and active effects for button */
-  #login-btn:hover {
-    background-color: #003f7f; /* Even darker blue */
-  }
-  
-  #login-btn:active {
-    transform: scale(0.98); /* Slightly shrink button on click */
-  }
-  
-  /* Add responsive behavior */
-  @media (max-width: 768px) {
-    #login-form {
-      width: 90%; /* Adjust width on smaller screens */
-    }
-  }
-  
+}
