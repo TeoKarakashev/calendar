@@ -19,9 +19,9 @@
 </head>
 <body onload="loadSession()">
   <?php include '../components/navbar.php'; ?>
-  <?php include '../components/timer.php'; ?>
 
   <div id="content">
+  <?php include '../components/timer.php'; ?>
   <?php include '../components/calendar.php'; ?>
   </div>
 </body>
