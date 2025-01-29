@@ -1,0 +1,49 @@
+.timer-container {
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    position: fixed;
+    left: 17%;
+    top: 10%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.timer-container h1 {
+    padding: 0;
+}
+
+.timer-container input {
+    width: 50px;
+    text-align: center;
+    font-size: 20px;
+    margin: 5px;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.timer-container button {
+    margin: 5px;
+    padding: 10px;
+    border: none;
+    background: white;
+    color: #007BFF;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.timer-container button:hover {
+    background: #ddd;
+}
+
+.timer-container button {
+    padding: 8px 15px;
+    cursor: pointer;
+    margin-left: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }

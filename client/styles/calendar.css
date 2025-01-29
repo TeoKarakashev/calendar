@@ -62,7 +62,7 @@ body {
 .popup {
   display: none;
   position: fixed;
-  top: 50%;
+  top: 60%;
   left: 80%;
   transform: translate(-50%, -50%);
   background-color: white;
@@ -151,7 +151,7 @@ body {
 .radar {
   display: none;
   position: fixed;
-  top: 50%;
+  top: 60%;
   left: 23%;
   transform: translate(-50%, -50%);
   background-color: white;
