@@ -13,10 +13,13 @@
   <script defer src="../scripts/logout.js"></script>
   <link rel="stylesheet" href="../styles/calendar.css"/>
   <link rel="stylesheet" href="../styles/navbar.css"/>
+  <link rel="stylesheet" href="../styles/timer.css"/>
   <script defer src="../scripts/navbar.js"></script>
+  <script defer src="../scripts/timer.js"></script>
 </head>
 <body onload="loadSession()">
   <?php include '../components/navbar.php'; ?>
+  <?php include '../components/timer.php'; ?>
 
   <div id="content">
   <?php include '../components/calendar.php'; ?>
