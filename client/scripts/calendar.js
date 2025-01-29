@@ -225,8 +225,6 @@ const openRadar = (events, presentationInterests, dayDate) => {
     return areDatesEqual(eventDate, dayDate);
   })
 
-  const titles = dailyEvents.map(event => event.presentation_title);
-
   dailyEvents.forEach(event => {
     presentationInterests.forEach(presentationInterest => {
       if (event.presentation_title === presentationInterest.title) {
@@ -237,8 +235,6 @@ const openRadar = (events, presentationInterests, dayDate) => {
       }
     });
   });
-
-  console.log(Object.keys(interestCounts), Object.values(interestCounts));
 
   drawRadarDiagram(Object.keys(interestCounts), Object.values(interestCounts));
   document.getElementById("radar").style.display = "block";
