@@ -143,6 +143,15 @@ const openPopup = async (day) => {
   radarDiagramButton.onclick = () => openRadar(events, presentationInterests, new Date(day));
   hourlyReservations.appendChild(radarDiagramButton);
 
+  const automaticAssignButton = document.createElement("button");
+  automaticAssignButton.textContent = "Автоматично записване";
+  automaticAssignButton.setAttribute('id', 'automatic-assign-button');
+  automaticAssignButton.onclick = () => automaticAssign(events, presentationInterests, currentUserPresentation, new Date(day));
+
+  if (currentUserPresentation && !hasCurrentUserReserved) {
+    hourlyReservations.appendChild(automaticAssignButton);
+  }
+
   popup.style.display = "block";
 }
 
@@ -238,4 +247,59 @@ const openRadar = (events, presentationInterests, dayDate) => {
 
   drawRadarDiagram(Object.keys(interestCounts), Object.values(interestCounts));
   document.getElementById("radar").style.display = "block";
+};
+
+const haveSameInterests = (event, presentationInterests, userPresentationInterests) => {
+  const eventInterests =
+    presentationInterests.filter(pi => pi.title === event.presentation_title).map(pi => pi.interest);
+
+  return eventInterests.every(interest => userPresentationInterests.includes(interest))
+    && userPresentationInterests.every(interest => eventInterests.includes(interest));
+};
+
+const automaticAssign = (events, presentationInterests, currentUserPresentation, dayDate) => {
+  const hours = ["9:30", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00"];
+
+  const userPresentationInterests =
+    presentationInterests.filter(pi => pi.title === currentUserPresentation).map(pi => pi.interest);
+
+  while (true) {
+    const dailyEvents = events.filter(event => {
+      const eventDate = new Date(event.date);
+      eventDate.setHours(0);
+      eventDate.setMinutes(0);
+      eventDate.setSeconds(0);
+      eventDate.setMilliseconds(0);
+
+      dayDate.setHours(0);
+      dayDate.setMinutes(0);
+      dayDate.setSeconds(0);
+      dayDate.setMilliseconds(0);
+
+      return areDatesEqual(eventDate, dayDate);
+    });
+
+    const hasPresentationWithSameInterests = dailyEvents.some(event => haveSameInterests(event, presentationInterests, userPresentationInterests))
+
+    if (hasPresentationWithSameInterests) {
+      dayDate.setDate(dayDate.getDate() + 1);
+      continue;
+    }
+
+    for (const hour of hours) {
+      const currentDayTime = new Date(dayDate);
+      currentDayTime.setHours(parseInt(hour.split(':')[0]));
+      currentDayTime.setMinutes(parseInt(hour.split(':')[1]));
+      currentDayTime.setSeconds(0);
+
+      const matchingEvent = events.find(event => areDatesEqual(new Date(event.date), currentDayTime));
+
+      if (!matchingEvent) {
+        reserveSlot(currentUserPresentation, localStorage.getItem('username'), currentDayTime);
+        return;
+      }
+    }
+
+    dayDate.setDate(dayDate.getDate() + 1);
+  }
 };

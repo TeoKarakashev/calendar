@@ -183,3 +183,18 @@ body {
 #radar-close-popup:hover {
   background-color: #c82333;
 }
+
+#automatic-assign-button {
+  padding: 8px 15px;
+  cursor: pointer;
+  margin-left: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+#automatic-assign-button button:hover {
+  background-color: #0056b3;
+}
