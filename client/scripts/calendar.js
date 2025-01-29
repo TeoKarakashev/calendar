@@ -1,3 +1,5 @@
+import { drawRadarDiagram } from './radar.js'
+
 const formatDate = (date) => {
   const year = date.getFullYear();
   const month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -75,6 +77,8 @@ const openPopup = async (day) => {
 
   const events = (await getData('../../server/controller/get_events.php')).data;
 
+  const presentationInterests = (await getData('../../server/controller/get_presentationInterests.php')).data;
+
   const hasCurrentUserReserved = events.find(event => event.presenter === username);
 
   const currentUserPresentation = (await getData('../../server/controller/load-user.php')).presentation;
@@ -97,7 +101,7 @@ const openPopup = async (day) => {
     const presentationTitleDiv = document.createElement("div");
     presentationTitleDiv.style.width = '200px';
     presentationTitleDiv.style.marginLeft = '30px';
-    
+
     if (matchingEvent) {
       presentationTitleDiv.textContent = matchingEvent.presentation_title;
     }
@@ -133,6 +137,12 @@ const openPopup = async (day) => {
     hourlyReservations.appendChild(hourRow);
   });
 
+  const radarDiagramButton = document.createElement("button");
+  radarDiagramButton.textContent = "Радар диаграма на интересите";
+  radarDiagramButton.setAttribute('id', 'generate-button');
+  radarDiagramButton.onclick = () => openRadar(events, presentationInterests, new Date(day));
+  hourlyReservations.appendChild(radarDiagramButton);
+
   popup.style.display = "block";
 }
 
@@ -142,19 +152,23 @@ function closePopup() {
 
 const reserveSlot = async (currentUserPresentation, username, currentDayTime) => {
   await sendData('../../server/controller/add_event.php',
-    { presentationTitle: currentUserPresentation,
+    {
+      presentationTitle: currentUserPresentation,
       presenter: username,
-      date: formatDate(currentDayTime) })
-      .catch(err => console.log(err));
+      date: formatDate(currentDayTime)
+    })
+    .catch(err => console.log(err));
 
   location.reload();
 }
 
 const cancelReservation = async (currentUserPresentation, username) => {
   await sendData('../../server/controller/delete_event.php',
-    { presentationTitle: currentUserPresentation,
-      presenter: username })
-      .catch(err => console.log(err));
+    {
+      presentationTitle: currentUserPresentation,
+      presenter: username
+    })
+    .catch(err => console.log(err));
 
   location.reload();
 }
@@ -185,3 +199,47 @@ document.addEventListener('DOMContentLoaded', () => {
     generateDays(newDate)
   });
 });
+
+document.getElementById('radar').addEventListener('click', () => closeRadarPopup());
+document.getElementById('close-popup').addEventListener('click', () => closePopup());
+
+function closeRadarPopup() {
+  document.getElementById("radar").style.display = "none";
+}
+
+const openRadar = (events, presentationInterests, dayDate) => {
+  const interestCounts = {};
+
+  const dailyEvents = events.filter(event => {
+    const eventDate = new Date(event.date);
+    eventDate.setHours(0);
+    eventDate.setMinutes(0);
+    eventDate.setSeconds(0);
+    eventDate.setMilliseconds(0);
+
+    dayDate.setHours(0);
+    dayDate.setMinutes(0);
+    dayDate.setSeconds(0);
+    dayDate.setMilliseconds(0);
+
+    return areDatesEqual(eventDate, dayDate);
+  })
+
+  const titles = dailyEvents.map(event => event.presentation_title);
+
+  dailyEvents.forEach(event => {
+    presentationInterests.forEach(presentationInterest => {
+      if (event.presentation_title === presentationInterest.title) {
+        if (!interestCounts[presentationInterest.interest]) {
+          interestCounts[presentationInterest.interest] = 0;
+        }
+        interestCounts[presentationInterest.interest]++;
+      }
+    });
+  });
+
+  console.log(Object.keys(interestCounts), Object.values(interestCounts));
+
+  drawRadarDiagram(Object.keys(interestCounts), Object.values(interestCounts));
+  document.getElementById("radar").style.display = "block";
+};

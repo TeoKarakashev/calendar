@@ -11,7 +11,6 @@
   <script defer src="../scripts/utilities.js"></script>
   <script defer src="../scripts/index.js"></script>
   <script defer src="../scripts/logout.js"></script>
-  <script defer src="../scripts/calendar.js"></script>
   <link rel="stylesheet" href="../styles/calendar.css"/>
   <link rel="stylesheet" href="../styles/navbar.css"/>
   <script defer src="../scripts/navbar.js"></script>
@@ -23,4 +22,5 @@
   <?php include '../components/calendar.php'; ?>
   </div>
 </body>
+<script defer src="../scripts/calendar.js" type="module"></script>
 </html>
