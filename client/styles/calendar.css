@@ -105,6 +105,21 @@ body {
   background-color: #0056b3;
 }
 
+#generate-button {
+  padding: 8px 15px;
+  cursor: pointer;
+  margin-left: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+#generate-button button:hover {
+  background-color: #0056b3;
+}
+
 #close-popup {
   position: absolute;
   top: 10px;
@@ -131,4 +146,40 @@ body {
   font-size: 16px;
   font-weight: bold;
   color: #333;
+}
+
+.radar {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 23%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 1px solid #007bff;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+#radarContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#radar-close-popup {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 50%;
+}
+
+#radar-close-popup:hover {
+  background-color: #c82333;
 }

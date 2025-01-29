@@ -18,9 +18,16 @@
 
   <div class="popup" id="popup">
   <div id="popupContent">
-    <button id="close-popup" onclick="closePopup()">X</button>
+    <button id="close-popup">X</button>
     <div id="hourly-reservations">
     </div>
+  </div>
+  </div>
+
+  <div class="radar" id="radar">
+  <div id="radarContent">
+    <button id="radar-close-popup">X</button>
+    <canvas id="radarCanvas" width="400px" height="400px"></canvas>
   </div>
   </div>
 </div>

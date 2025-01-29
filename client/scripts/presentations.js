@@ -101,14 +101,24 @@ function displayPresentations(presentationsData) {
             }
 }
 
-function updatePresentation(selectedPresentation) {
+async function updatePresentation(selectedPresentation) {
     const data = {
         username: window.localStorage.getItem('username'), 
         presentation: selectedPresentation 
     };
 
+    const userPresentation = (await getData('../../server/controller/load-user.php')).presentation;
+
+    const deleteEventData = {
+        presenter: window.localStorage.getItem('username'), 
+        presentationTitle: userPresentation 
+    };
+
     sendData('../../server/controller/update-presentation.php', data)
-        .then(response => {
+        .then(() => {
+            return sendData('../../server/controller/delete_event.php', deleteEventData)
+        })
+        .then(() => {
             location.href = './presentations.php';
         })
         .catch(err => {
