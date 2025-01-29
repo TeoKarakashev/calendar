@@ -2,6 +2,7 @@ let searchField = document.getElementById('search-field');
 let allPresentationsData = [];
 let filteredPresentations = [];
 let presentationInterests = [];
+let recommendedPresentations = [];
 let events = [];
 
 window.addEventListener('DOMContentLoaded', loadPresentations());
@@ -25,10 +26,13 @@ function loadPresentations() {
         .then(async response => {
             presentationInterests = (await getData('../../server/controller/get_presentationInterests.php')).data;
             events = (await getData('../../server/controller/get_events.php')).data;
+            recommendedPresentations = response['recommended'];
 
             let presentationDiv = document.getElementById('presentations');
 
-            allPresentationsData = response['all'];
+            let allPresentations = response['all'];
+            
+            allPresentationsData = orderPresentations(allPresentations, recommendedPresentations);
             displayPresentations(allPresentationsData);
         })
         .catch(err => {
@@ -124,6 +128,23 @@ async function updatePresentation(selectedPresentation) {
         .catch(err => {
             console.log(err);
         });
+}
+
+function orderPresentations(all, recommended) {
+    const username = localStorage.getItem('username');
+    let reservedPresentations = all.filter(presentation => presentation.is_taken);
+
+    let userPresentation = reservedPresentations
+        .filter(presentation => presentation.username === username);
+
+    let recommendedData = all.filter(presentation => recommended.includes(presentation.title));
+    recommendedData = recommendedData.filter(presentation => !userPresentation.includes(presentation));
+
+    let rest = all.filter(presentation => !recommendedData.includes(presentation));
+    rest = rest.filter(presentation =>  !userPresentation.includes(presentation));
+
+    let result = [...userPresentation, ...recommendedData, ...rest];
+    return result;
 }
 
 const formatDate = (date) => {
