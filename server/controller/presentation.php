@@ -10,7 +10,7 @@
   $username = isset($_SESSION['username']) ? $_SESSION['username'] : '';
   $presentationOrchestrator = new PresentationOrchestrator();
 
-  //$recommendedPresentations = $presentationOrchestrator->getAllUntakenRecommendedPresentations(['username' => $username]);
+  $recommendedPresentations = $presentationOrchestrator->getAllUntakenRecommendedPresentations(['username' => $username]);
 
   $allPresentations = $presentationOrchestrator->getAllPresentations();
 
@@ -22,7 +22,7 @@
     echo json_encode([
       'success' => true,
       'message'=> 'success',
-      //'recommended' => $recommendedPresentations,
+      'recommended' => $recommendedPresentations,
       'all' => $allPresentations,
       'current' => $currentPresentation
     ]);
