@@ -132,14 +132,17 @@ async function updatePresentation(selectedPresentation) {
 
 function orderPresentations(all, recommended) {
     const username = localStorage.getItem('username');
-    let userPresentationTitle = events
-        .filter(event => event.presenter === username)
-        .map(event => event.presentation_title);
-    let userPresentation = all.filter(presentation => userPresentationTitle.includes(presentation.title));
+    let reservedPresentations = all.filter(presentation => presentation.is_taken);
+
+    let userPresentation = reservedPresentations
+        .filter(presentation => presentation.username === username);
 
     let recommendedData = all.filter(presentation => recommended.includes(presentation.title));
+    recommendedData = recommendedData.filter(presentation => !userPresentation.includes(presentation));
+
     let rest = all.filter(presentation => !recommendedData.includes(presentation));
     rest = rest.filter(presentation =>  !userPresentation.includes(presentation));
+
     let result = [...userPresentation, ...recommendedData, ...rest];
     return result;
 }
