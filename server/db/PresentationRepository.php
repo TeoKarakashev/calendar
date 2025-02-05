@@ -7,6 +7,8 @@
         private $removeUserFromPresentation;
         private $addUserToPresentation;
         private $getPresentationForUser;
+        private $deletePresentation;
+        private $updatePresentationTitle;
 
 
         public function __construct() {
@@ -66,6 +68,14 @@
                     WHERE username = :username;";
             $this->getPresentationForUser = $this->connection->prepare($sql);
 
+            $sql = "DELETE FROM presentations
+                    WHERE title = :title";
+            $this->deletePresentation = $this->connection->prepare($sql);
+
+            $sql = "UPDATE presentations
+                    SET title = :title
+                    WHERE title = :originalTitle";
+            $this->updatePresentationTitle = $this->connection->prepare($sql);
         }
         
         public function getAllPresentations() {
@@ -127,6 +137,23 @@
             }
         }
 
+        public function updatePresentationTitle($data) {
+            try {
+                $this->updatePresentationTitle->execute($data);
+                return ["success"=> true];
+            } catch (PDOException $e) {
+                return ["success" => false, "error" => $e->getMessage()];
+            }
+        }
+
+        public function deletePresentation($data) {
+            try {
+                $this->deletePresentation->execute($data);
+                return ["success"=> true];
+            } catch (PDOException $e) {
+                return ["success" => false, "error" => $e->getMessage()];
+            }
+        }
 
         function __destruct() {
             $this->connection = null;
