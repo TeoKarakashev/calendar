@@ -38,14 +38,14 @@
             if ($confirmPassword !== $password) {
                 $errors[] = 'Confirm password does not match password';
             } else {
-                $user = new User($username, $password,  $firstName, $lastName );
+                $user = new User($username, $password,  $firstName, $lastName, [], 'user' );
                 $userExist = $user->exists();
 
                 if ($userExist) {
                     $errors[] = 'User already exists';
                 } else {
                     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-                    $user->createUser( $firstName, $lastName, $username, $passwordHash);
+                    $user->createUser( $firstName, $lastName, $username, $passwordHash, 'user');
                 }
             }
         }
@@ -60,12 +60,14 @@
         http_response_code(200);
         
         $_SESSION['username'] = $username;
+        $_SESSION['role'] = 'user';
 
         echo json_encode([
             'success' => true,
             'message' => 'User created successfully',
             'firstName' => $firstName,
             'lastName' => $lastName,
-            'username' => $username]);
+            'username' => $username,
+            'role' => 'user']);
     }
 ?>

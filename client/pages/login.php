@@ -16,9 +16,10 @@
   <script defer src="../scripts/login.js"></script>
   <link rel="stylesheet" href="../styles/navbar.css"/>
   <link rel="stylesheet" href="../styles/login.css"/>
+  <script defer src="../scripts/createAdmin.js"></script>
   <script defer src="../scripts/navbar.js"></script>
 </head>
-<body>
+<body onLoad = 'createAdmin()'>
   <?php include '../components/navbar.php'; ?>
 
   <form id="login-form">

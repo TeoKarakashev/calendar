@@ -13,10 +13,11 @@
   <script defer src="../scripts/utilities.js"></script>
   <script defer src="../scripts/register.js"></script>
   <script defer src="../scripts/navbar.js"></script>
+  <script defer src="../scripts/createAdmin.js"></script>
   <link rel="stylesheet" href="../styles/navbar.css"/>
   <link rel="stylesheet" href="../styles/register.css"/>
 </head>
-<body>
+<body onLoad = 'createAdmin()'>
   <?php include '../components/navbar.php'; ?>
 
   <form id="register-form">

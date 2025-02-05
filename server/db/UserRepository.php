@@ -36,8 +36,8 @@
             $sql = "SELECT * FROM users WHERE username = :username";
             $this->selectUser = $this->connection->prepare($sql);
 
-            $sql = "INSERT INTO users(first_name, last_name, username, password) VALUES
-                    (:firstName, :lastName, :username, :password)";
+            $sql = "INSERT INTO users(first_name, last_name, username, password, role) VALUES
+                    (:firstName, :lastName, :username, :password, :role)";
             $this->insertUser = $this->connection->prepare($sql);
 
             $sql = "SELECT users.username, users.first_name, users.last_name, users.password ,user_interests.interest 
