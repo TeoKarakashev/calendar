@@ -25,5 +25,24 @@
                 return [];
             }
         }
+
+        public function getInterestsForPresentation($data) {
+            $result = $this->presentationInterestsRepository->getInterestsForPresentation($data);
+
+            if($result['success']) {
+                $interestsData = $result['data']->fetchAll(PDO::FETCH_COLUMN);
+                return $interestsData;
+            } else {
+                return [];
+            }
+        }
+
+        public function addPresentationInterest($data) {
+            return $this->presentationInterestsRepository->addPresentationInterest($data);
+        }
+
+        public function deletePresentationInterest($data) {
+            return $this->presentationInterestsRepository->deletePresentationInterest($data);
+        }
     }
 ?>
