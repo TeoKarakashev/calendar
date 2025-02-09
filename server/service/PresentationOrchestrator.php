@@ -26,6 +26,11 @@ class PresentationOrchestrator {
     return $this->username;
    }
 
+    public function createPresentation($data) {
+        $result = $this->presentationRepository->createPresentation($data);
+        return $result['success'];
+    }
+
    public function getAllPresentations() {
     try {
         $selectPresentations =  $this->presentationRepository->getAllPresentations();

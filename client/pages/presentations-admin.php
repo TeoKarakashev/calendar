@@ -17,6 +17,7 @@
     <h1>Презентации</h1>
 
     <input type="text" id="search-field" class="search-field" placeholder="Търсене">
+    <div><button class="button" id="create-button" type="submit">Добави презентация</button></div>
 
     <div class="card" id="presentations" name="presentations" tabindex="0">
       <div class="details">

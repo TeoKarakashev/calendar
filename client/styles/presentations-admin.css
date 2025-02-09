@@ -68,7 +68,7 @@ h1 {
     text-align: left;
 }
 
-.edit-button {
+.edit-button, #create-button {
     background-color: #007bff;
     color: #fff;
     width: 100px;
@@ -90,7 +90,7 @@ h1 {
     transition: background-color 0.3s ease;
 }
 
-.edit-button:hover {
+.edit-button:hover, #create-button:hover {
     background-color: #0056b3;
 }
 

@@ -87,6 +87,12 @@ function displayPresentations(presentationsData) {
     }
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("create-button").addEventListener("click", function() {
+        window.location.href =  'presentations-create.php';
+    });
+});
+
 async function updatePresentation(selectedPresentation) {
     window.location.href = `presentations-update.php?key=${selectedPresentation}`;
 }

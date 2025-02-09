@@ -1,6 +1,7 @@
 <?php
     class PresentationRepository {
         private $connection;
+        private $createPresentation;
         private $getAllPresentations;
         private $getAllUntakenRecommendedPresentations;
         private $getAllUntakenPresentations;
@@ -35,6 +36,10 @@
         }
 
         private function prepareStatements() {
+            $sql = "INSERT INTO presentations (title)
+                    VALUES (:presentation)";
+            $this->createPresentation = $this->connection->prepare($sql);
+
             $sql = "SELECT *
                 FROM presentations";
             $this->getAllPresentations = $this->connection->prepare($sql);
@@ -78,6 +83,16 @@
             $this->updatePresentationTitle = $this->connection->prepare($sql);
         }
         
+        public function createPresentation($data) {
+            try {
+                $this->createPresentation->execute($data);
+                
+                return ["success" => true];
+            } catch (PDOException $e) {
+                return ["success" => false, "error" => $e->getMessage()];
+            }
+        }
+
         public function getAllPresentations() {
             try {
                 $this->getAllPresentations->execute();
