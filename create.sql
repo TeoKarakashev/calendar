@@ -13,23 +13,23 @@ CREATE TABLE user_interests (
     username VARCHAR(255) NOT NULL,
     interest VARCHAR(255) NOT NULL,
     PRIMARY KEY (username, interest),
-    FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE,
-    FOREIGN KEY (interest) REFERENCES interests(name) ON DELETE CASCADE
+    FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (interest) REFERENCES interests(name) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE presentations (
-  title VARCHAR(255) NOT NULL PRIMARY KEY,
+  title VARCHAR(255) NOT NULL UNIQUE PRIMARY KEY,
   is_taken BOOLEAN NOT NULL DEFAULT FALSE,
   username VARCHAR(255) UNIQUE DEFAULT NULL, 
-  FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE
+  FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE presentation_interests (
   title VARCHAR(255) NOT NULL,
   interest VARCHAR(255) NOT NULL,
   PRIMARY KEY (title, interest),
-  FOREIGN KEY (title) REFERENCES presentations(title) ON DELETE CASCADE,
-  FOREIGN KEY (interest) REFERENCES interests(name) ON DELETE CASCADE
+  FOREIGN KEY (title) REFERENCES presentations(title) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (interest) REFERENCES interests(name) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 INSERT INTO interests (name)
