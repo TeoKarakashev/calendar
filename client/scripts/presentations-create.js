@@ -2,34 +2,32 @@ let presentationTitle;
 let presentationCreateButton;
 
 window.addEventListener("DOMContentLoaded", () => {
+    presentationTitleField = document.getElementById('presentation-title-field');
     presentationTitle = document.getElementById('presentation-title');
     presentationCreateButton = document.getElementById('create-presentation-btn');
+    presentationTitleField.appendChild(presentationTitle);
+    presentationTitleField.appendChild(presentationCreateButton);
 
-    // Log the elements to see if they are found correctly
     console.log(presentationTitle, presentationCreateButton);
 
-    // Check if both elements exist
     if (!presentationTitle || !presentationCreateButton) {
         console.error("Either input or button not found!");
-        return; // Stop execution if elements are not found
+        return;
     }
 
     presentationTitle.classList.add("presentation-title");
     let inputValue = presentationTitle.value.trim();
 
-    // Initially disable the button if the input is empty
-    presentationCreateButton.disabled = !inputValue; // Disabled if empty
+    presentationCreateButton.disabled = !inputValue;
 
     presentationCreateButton.textContent = "Добави презентация";
     presentationCreateButton.classList.add("create-presentation-btn");
 
-    // Handle the button click event
     presentationCreateButton.addEventListener("click", (e) => {
         e.preventDefault();
         createPresentation(presentationTitle.value);
     });
 
-    // Listen to input changes to enable/disable the button
     presentationTitle.addEventListener("input", () => {
         presentationCreateButton.disabled = !presentationTitle.value.trim();
     });

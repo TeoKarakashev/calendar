@@ -41,7 +41,7 @@ h1 {
     padding: 15px;
 }
 
-.update-button {
+.update-button, .update-title-btn {
     background-color: #007bff;
     color: #fff;
     width: 100px;
@@ -52,6 +52,43 @@ h1 {
     transition: background-color 0.3s ease;
 }
 
-.update-button:hover {
+.update-button:hover, .update-title-btn:hover {
     background-color: #0056b3;
+}
+
+.update-title-btn:disabled {
+    background-color: #ccc;
+    color: #888;
+    cursor: not-allowed;
+}
+
+#presentation-title-field {
+    width: 100%;
+    max-width: 500px;
+    background-color: #f9f9f9;
+
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin: 0 auto;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#presentation-title {
+    width: 300px;
+    display: block;
+    margin: 0 auto;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 8px 10px;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
 }
