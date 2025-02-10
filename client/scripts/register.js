@@ -60,10 +60,10 @@ registerBtn.addEventListener('click', () => {
   sendData('../../server/controller/register.php', user)
   .then(async response => {
     load(response);
-    const username = (await getData('../../server/controller/index.php')).user;
-    localStorage.setItem('username', username);
-    location.href = './index.php';
-  })
+    const obj = (await getData('../../server/controller/index.php'));
+    localStorage.setItem('username', obj.username);
+    localStorage.setItem('role', obj.role);
+    })
   .catch(err => {
     console.log(err);
     //showErrors(err);

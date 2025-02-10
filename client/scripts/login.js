@@ -46,9 +46,19 @@ loginBtn.onclick = () => {
   sendData('../../server/controller/login.php', user)
     .then(async response => {
       load(response);
-      const username = (await getData('../../server/controller/index.php')).user;
-      localStorage.setItem('username', username);
-      location.href = './index.php';
+      const obj = (await getData('../../server/controller/index.php'));
+      localStorage.setItem('username', obj.user);
+      localStorage.setItem('role', obj.role);
+      
+      function checkStorageAndRedirect() {
+        if (localStorage.getItem('role') !== null) {
+            location.href = './index.php';
+        } else {
+            setTimeout(checkStorageAndRedirect, 100);
+        }
+    }
+    
+    checkStorageAndRedirect();
     })
     .catch(err => {
       if (err) {

@@ -9,15 +9,17 @@
         private $password;
         private $interests;
 
+        private $role;
+
         private $userRepository;
 
-        public function __construct($username, $password, $firstName='', $lastName='', $interests = []) {
+        public function __construct($username, $password, $firstName='', $lastName='', $interests = [], $role = 'user') {
             $this->firstName = $firstName;
             $this->lastName = $lastName;
             $this->username = $username;
             $this->password = $password;
             $this->interests = $interests;
-
+            $this->role = $role;
             $this->userRepository = new UserRepository();
         }
 
@@ -39,6 +41,10 @@
 
         public function getInterests() {
             return $this->interests;
+        }
+
+        public function getRole() {
+            return $this->role;
         }
 
         public function exists() {
@@ -66,6 +72,7 @@
                 if ($userData && password_verify($this->password, $userData['password'])) {
                     $this->firstName = $userData['first_name'];
                     $this->lastName = $userData['last_name'];
+                    $this->role = $userData['role'];
                     return true;
                 } else {
                     return false;
@@ -76,18 +83,20 @@
             }
         }
 
-        public function createUser($firstName, $lastName, $username, $passwordHash) {
+        public function createUser($firstName, $lastName, $username, $passwordHash, $role) {
             $query = $this->userRepository->insertUserQuery([
                 'firstName' => $firstName,
                 'lastName' => $lastName,
                 'username' => $username,
-                'password' => $passwordHash]);
+                'password' => $passwordHash,
+                'role' => $role]);
 
             if ($query['success']) {
                 $this->firstName = $firstName;
                 $this->lastName = $lastName;
                 $this->username = $username;
                 $this->password = $passwordHash;
+                $this->role = $role;
             }
         }
 
@@ -99,6 +108,7 @@
                 $this->lastName = $userData['last_name'];
                 $this->username = $userData['username'];
                 $this->password = $userData['password'];
+                $this->role = $userData['role'];
 
                 $userWithInterests = $this->userRepository->getUserWithInterestsByUsername(['username' => $this->username]);
                 if($userWithInterests['success']) {

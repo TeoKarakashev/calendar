@@ -21,11 +21,12 @@
         }
 
         if ($username && $password) {
-            $user = new User($username, $password, '', '', '');
+            $user = new User($username, $password, '', '', '', '');
             $userExist = $user->login();
 
             if ($userExist) {
                 $_SESSION['username'] = $username;
+                $_SESSION['role'] = $user->getRole();
             } else {
                 $errors[] = 'Username or password is incorrect!';
             }
@@ -38,7 +39,8 @@
         http_response_code(200);
         echo json_encode(['success' => true,
                           'message' => 'User logged in',
-                          'username' => $_SESSION['username']]);
+                          'username' => $_SESSION['username'],
+                          'role' => $_SESSION['role']]);
         
     } else {
         http_response_code(401);
