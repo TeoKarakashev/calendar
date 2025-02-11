@@ -63,6 +63,7 @@ registerBtn.addEventListener('click', () => {
     const obj = (await getData('../../server/controller/index.php'));
     localStorage.setItem('username', obj.username);
     localStorage.setItem('role', obj.role);
+    location.href = './index.php'
     })
   .catch(err => {
     console.log(err);
