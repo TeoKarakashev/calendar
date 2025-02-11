@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>Calendar</title>
+  <title>Профил</title>
   <script src="../scripts/utilities.js"></script>
   <script src="../scripts/index.js"></script>
   <script src="../scripts/logout.js"></script>

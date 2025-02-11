@@ -6,7 +6,7 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>Calendar</title>
+  <title>Календар</title>
   <script src="../scripts/utilities.js"></script>
   <script src="../scripts/index.js"></script>
   <script src="../scripts/logout.js"></script>
@@ -17,8 +17,7 @@
 <body >
 <?php include '../components/navbar.php'; ?>
   
-  <h1>aдминска страница</h1>
+  <h1>Админска страница</h1>
 
-  <
 </body>
 </html>
