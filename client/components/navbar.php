@@ -2,6 +2,7 @@
     <ul>
     <li><a class="links" id="home-btn" href="./index.php">Начало</a></li>
       <li><a class="links" id="interests-btn" href="./interests.php">Интереси</a></li>
+      <li><a class="links" id="interests-admin-btn" href="./interests-admin.php">Интереси</a></li>
       <li><a class="links" id="my-profile-btn" href="./my-profile.php">Моят профил</a></li>
       <li><a class="links" id="presentation-btn" href="./presentations.php">Презентации</a></li>
       <li><a class="links" id="presentations-admin-btn" href="./presentations-admin.php">Презентации</a></li>
