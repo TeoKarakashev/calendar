@@ -20,7 +20,7 @@
     if (!$errors) {
         http_response_code(200);
         echo json_encode(['success' => true,
-                          'message' => 'Interests updated']);
+                          'message' => 'Presentation updated']);
         
     } else {
         http_response_code(401);
