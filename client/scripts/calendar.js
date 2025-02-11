@@ -83,6 +83,8 @@ const openPopup = async (day) => {
 
   const currentUserPresentation = (await getData('../../server/controller/load-user.php')).presentation;
 
+  const isCurrentUserAdmin = localStorage.getItem('role') === 'admin';
+
   hours.forEach(hour => {
     const currentDayTime = new Date(day);
     currentDayTime.setHours(parseInt(hour.split(':')[0]));
@@ -110,7 +112,10 @@ const openPopup = async (day) => {
 
     const reserveButton = document.createElement("button");
     reserveButton.textContent = "Резервирай";
-    reserveButton.onclick = async () => await reserveSlot(currentUserPresentation, username, currentDayTime);
+    reserveButton.onclick = async () => {
+      await reserveSlot(currentUserPresentation, username, currentDayTime);
+      location.reload();
+    };
     reserveButton.style.marginLeft = '60px';
 
     const isReserveDisabled = !!matchingEvent;
@@ -121,14 +126,13 @@ const openPopup = async (day) => {
 
     hourRow.appendChild(reserveButton);
 
-    const isCancelEnabled = !!events.find(event => areDatesEqual(new Date(event.date), currentDayTime)
-      && username === event.presenter);
+    // const isCancelEnabled = !!events.find(event => areDatesEqual(new Date(event.date), currentDayTime));
 
     const cancelButton = document.createElement("button");
     cancelButton.textContent = "Отказ";
-    cancelButton.onclick = async () => await cancelReservation(matchingEvent.presentation_title, username);
+    cancelButton.onclick = async () => await cancelReservation(matchingEvent.presentation_title, matchingEvent.presenter);
 
-    if (!isCancelEnabled) {
+    if (!((isCurrentUserAdmin && matchingEvent) || (!isCurrentUserAdmin && matchingEvent && matchingEvent.presenter === username))) {
       cancelButton.setAttribute('disabled', true);
     }
 
@@ -146,10 +150,25 @@ const openPopup = async (day) => {
   const automaticAssignButton = document.createElement("button");
   automaticAssignButton.textContent = "Автоматично записване";
   automaticAssignButton.setAttribute('id', 'automatic-assign-button');
-  automaticAssignButton.onclick = () => automaticAssign(events, presentationInterests, currentUserPresentation, new Date(day));
+  automaticAssignButton.onclick = async () => {
+      await automaticAssign(events, presentationInterests, localStorage.getItem('username'), currentUserPresentation, new Date(day))
+      location.reload()
+    };
 
-  if (currentUserPresentation && !hasCurrentUserReserved) {
+  if (currentUserPresentation && !hasCurrentUserReserved && !isCurrentUserAdmin) {
     hourlyReservations.appendChild(automaticAssignButton);
+  }
+
+  const adminAssignButton = document.createElement("button");
+  adminAssignButton.textContent = "Автоматично записване на всички";
+  adminAssignButton.setAttribute('id', 'automatic-assign-button');
+  adminAssignButton.onclick = async () => {
+    await adminAssign(presentationInterests, new Date(day));
+    location.reload();
+  }
+
+  if (isCurrentUserAdmin) {
+    hourlyReservations.appendChild(adminAssignButton);
   }
 
   popup.style.display = "block";
@@ -167,8 +186,6 @@ const reserveSlot = async (currentUserPresentation, username, currentDayTime) =>
       date: formatDate(currentDayTime)
     })
     .catch(err => console.log(err));
-
-  location.reload();
 }
 
 const cancelReservation = async (currentUserPresentation, username) => {
@@ -179,7 +196,7 @@ const cancelReservation = async (currentUserPresentation, username) => {
     })
     .catch(err => console.log(err));
 
-  location.reload();
+    location.reload();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -257,7 +274,7 @@ const haveSameInterests = (event, presentationInterests, userPresentationInteres
     && userPresentationInterests.every(interest => eventInterests.includes(interest));
 };
 
-const automaticAssign = (events, presentationInterests, currentUserPresentation, dayDate) => {
+const automaticAssign = async (events, presentationInterests, currentUser, currentUserPresentation, dayDate) => {
   const hours = ["9:30", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00"];
 
   const userPresentationInterests =
@@ -295,7 +312,7 @@ const automaticAssign = (events, presentationInterests, currentUserPresentation,
       const matchingEvent = events.find(event => areDatesEqual(new Date(event.date), currentDayTime));
 
       if (!matchingEvent) {
-        reserveSlot(currentUserPresentation, localStorage.getItem('username'), currentDayTime);
+        await reserveSlot(currentUserPresentation, currentUser, currentDayTime);
         return;
       }
     }
@@ -303,3 +320,18 @@ const automaticAssign = (events, presentationInterests, currentUserPresentation,
     dayDate.setDate(dayDate.getDate() + 1);
   }
 };
+
+const adminAssign = async (presentationInterests, startDate) => {
+  const allPresentations = (await getData('../../server/controller/presentation.php')).all
+
+  let events = (await getData('../../server/controller/get_events.php')).data;
+
+  const presentationsToAssign = allPresentations.filter(presentation => presentation.is_taken
+    && !events.find(event => event.presentation_title === presentation.title));
+
+    for (const presentation of presentationsToAssign) {
+      await automaticAssign([...events], [...presentationInterests], presentation.username, presentation.title, new Date(startDate));
+
+      events = (await getData('../../server/controller/get_events.php')).data;
+    }
+}
