@@ -9,8 +9,6 @@ window.addEventListener("DOMContentLoaded", () => {
     interestNameField.appendChild(interestName);
     interestNameField.appendChild(interestCreateButton);
 
-    console.log(interestName, interestCreateButton);
-
     if (!interestName || !interestCreateButton) {
         console.error("Either input or button not found!");
         return;
