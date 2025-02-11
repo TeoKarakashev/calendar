@@ -3,9 +3,17 @@
 
     session_start();
 
-    $presentationInterestsService = new PresentationInterestsService();
+    $errors = [];
 
+    $presentationInterestsService = new PresentationInterestsService();
     $result = $presentationInterestsService->getPresentationInterests();
+
+    if ($_POST) {
+        $presentation = $_POST['presentation'];
+        $interestsPerPresentation = $presentationInterestsService->getInterestsPerPresentation(['presentation' => $presentation]);
+    } else {
+        $errors[] = 'Invalid request!';
+    }
 
     http_response_code(200);
     echo json_encode([

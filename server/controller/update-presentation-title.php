@@ -9,13 +9,10 @@
     $errors = [];
 
     if ($_POST) {
-        $username = isset($_POST['username']) ? testInput($_POST['username']) : '';
         $presentation = $_POST['presentation'];
+        $title = $_POST['title'];
         $presentationOrchestrator = new PresentationOrchestrator();
-
-        $presentationOrchestrator->removeUserFromPresentation(['username' => $username]);
-
-        $updatePresentation = $presentationOrchestrator->updatePresentation(['username' => $username, 'presentation' => $presentation]);               
+        $updatePresentationTitle = $presentationOrchestrator->updatePresentationTitle(['originalTitle' => $presentation, 'title' => $title]);
     } else {
         $errors[] = 'Invalid request!';
     }

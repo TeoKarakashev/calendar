@@ -26,6 +26,11 @@ class PresentationOrchestrator {
     return $this->username;
    }
 
+    public function createPresentation($data) {
+        $result = $this->presentationRepository->createPresentation($data);
+        return $result['success'];
+    }
+
    public function getAllPresentations() {
     try {
         $selectPresentations =  $this->presentationRepository->getAllPresentations();
@@ -75,8 +80,18 @@ class PresentationOrchestrator {
     return $result['success'];
    }
 
+   public function deletePresentation($data){
+    $result = $this->presentationRepository->deletePresentation($data);
+    return $result['success'];
+   }
+
    public function updatePresentation($data){
     $result = $this->presentationRepository->updatePresentationQuery($data);
+    return $result['success'];
+   }
+
+   public function updatePresentationTitle($data){
+    $result = $this->presentationRepository->updatePresentationTitle($data);
     return $result['success'];
    }
 

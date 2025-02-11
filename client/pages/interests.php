@@ -27,7 +27,7 @@
       <div><button class="update-btn" id="update-btn" type="submit"></button></div>
     </div>
   </div>
-  <!-- <button id="update-btn" type="submit">Update</button> -->
+  
   <script src="../scripts/interests.js"></script>
 </body>
 </html>

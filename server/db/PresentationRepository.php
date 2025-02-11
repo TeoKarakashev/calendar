@@ -1,12 +1,15 @@
 <?php
     class PresentationRepository {
         private $connection;
+        private $createPresentation;
         private $getAllPresentations;
         private $getAllUntakenRecommendedPresentations;
         private $getAllUntakenPresentations;
         private $removeUserFromPresentation;
         private $addUserToPresentation;
         private $getPresentationForUser;
+        private $deletePresentation;
+        private $updatePresentationTitle;
 
 
         public function __construct() {
@@ -33,6 +36,10 @@
         }
 
         private function prepareStatements() {
+            $sql = "INSERT INTO presentations (title)
+                    VALUES (:presentation)";
+            $this->createPresentation = $this->connection->prepare($sql);
+
             $sql = "SELECT *
                 FROM presentations";
             $this->getAllPresentations = $this->connection->prepare($sql);
@@ -66,8 +73,26 @@
                     WHERE username = :username;";
             $this->getPresentationForUser = $this->connection->prepare($sql);
 
+            $sql = "DELETE FROM presentations
+                    WHERE title = :title";
+            $this->deletePresentation = $this->connection->prepare($sql);
+
+            $sql = "UPDATE presentations
+                    SET title = :title
+                    WHERE title = :originalTitle";
+            $this->updatePresentationTitle = $this->connection->prepare($sql);
         }
         
+        public function createPresentation($data) {
+            try {
+                $this->createPresentation->execute($data);
+                
+                return ["success" => true];
+            } catch (PDOException $e) {
+                return ["success" => false, "error" => $e->getMessage()];
+            }
+        }
+
         public function getAllPresentations() {
             try {
                 $this->getAllPresentations->execute();
@@ -127,6 +152,23 @@
             }
         }
 
+        public function updatePresentationTitle($data) {
+            try {
+                $this->updatePresentationTitle->execute($data);
+                return ["success"=> true];
+            } catch (PDOException $e) {
+                return ["success" => false, "error" => $e->getMessage()];
+            }
+        }
+
+        public function deletePresentation($data) {
+            try {
+                $this->deletePresentation->execute($data);
+                return ["success"=> true];
+            } catch (PDOException $e) {
+                return ["success" => false, "error" => $e->getMessage()];
+            }
+        }
 
         function __destruct() {
             $this->connection = null;
