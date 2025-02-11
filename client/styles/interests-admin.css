@@ -55,8 +55,38 @@ h1 {
     margin-top: 20px;
 }
 
-#create-button:hover {
+.edit-button {
+    background-color: #007bff;
+    color: #fff;
+    width: 100px;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.delete-button {
+    background-color: #dc3545;
+    color: #fff;
+    width: 100px;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.edit-button:hover, #create-button:hover {
     background-color: #0056b3;
+}
+
+.delete-button:hover {
+    background-color: #a71d2a;
+}
+
+.interest {
+    width: 230px;
 }
 
 .search-field {

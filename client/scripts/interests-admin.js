@@ -47,6 +47,24 @@ function displayInterests(interestsData) {
             interest.textContent = `${currInterest}`;
             innerContainer.appendChild(interest);
 
+            const editButton = document.createElement('button');
+            editButton.classList.add("edit-button");
+            editButton.textContent = "Редактирай";
+            editButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                updateInterest(currInterest);
+            });
+            innerContainer.appendChild(editButton);
+
+            const deleteButton = document.createElement('button');
+            deleteButton.classList.add("delete-button");
+            deleteButton.textContent = "Изтрий";
+            deleteButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                deleteInterest(currInterest);
+            });
+            innerContainer.appendChild(deleteButton);
+
             interestsContainer.appendChild(innerContainer);
         });
     }
@@ -57,3 +75,16 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.href =  'interests-create.php';
     });
 });
+
+async function updateInterest(selectedInterest) {
+    window.location.href = `interests-update.php?key=${selectedInterest}`;
+}
+
+async function deleteInterest(selectedInterest) {
+    await sendData('../../server/controller/delete_interest.php',
+        {
+            interest: selectedInterest
+        })
+        .catch(err => console.log(err));
+        location.reload();
+}

@@ -22,6 +22,8 @@
     <div id="interest-container">
         <div class="inner-container">
             <div id="interest"></div>
+            <div><button class="button" id="edit-btn" type="submit">Редактирай</button></div>
+            <div><button class="button" id="delete-btn" type="submit">Изтрий</button></div>
         </div>
     </div>
   
