@@ -14,7 +14,7 @@
 <body>
   <?php include '../components/navbar.php'; ?>
 
-    <h1>Създай презентация</h1>
+    <h1>Добави презентация</h1>
 
     <div id="presentation-title-field">
         <input type="text" id="presentation-title" class="presentation-title">

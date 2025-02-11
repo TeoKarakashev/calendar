@@ -5,6 +5,7 @@
       <li><a class="links" id="my-profile-btn" href="./my-profile.php">Моят профил</a></li>
       <li><a class="links" id="presentation-btn" href="./presentations.php">Презентации</a></li>
       <li><a class="links" id="presentations-admin-btn" href="./presentations-admin.php">Презентации</a></li>
+      <li><a class="links" id="interests-admin-btn" href="./interests-admin.php">Интереси</a></li>
       <li><a class="links" id="sign-in-btn" href="./register.php">Регистрирай се</a></li>
       <li><a class="links" id="sign-up-btn" href="./login.php">Вход</a></li>
       <li><a class="links" id="logout-btn" onclick="logout(event)">Изход</a></li>

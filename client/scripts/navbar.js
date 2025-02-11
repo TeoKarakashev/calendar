@@ -8,6 +8,7 @@ const presentationBtn = document.getElementById('presentation-btn');
 const loginBtn = document.getElementById('sign-up-btn');
 const registerBtn = document.getElementById('sign-in-btn');
 const presentationsAdminBtn = document.getElementById('presentations-admin-btn');
+const interestsAdminBtn = document.getElementById('interests-admin-btn');
 
 if (username && (role === 'user' || role === null)) {
   logoutBtn.style.display = 'inline-block';
@@ -17,12 +18,14 @@ if (username && (role === 'user' || role === null)) {
   loginBtn.style.display = 'none';
   registerBtn.style.display = 'none';
   presentationsAdminBtn.style.display = 'none';
+  interestsAdminBtn.style.display = 'none';
 } else if(username && role ==='admin') {
     logoutBtn.style.display = 'inline-block';
     interestsBtn.style.display = 'none';
     myProfileBtn.style.display = 'inline-block';
     presentationBtn.style.display = 'none';
     presentationsAdminBtn.style.display = 'inline-block';
+    interestsAdminBtn.style.display = 'inline-block';
     loginBtn.style.display = 'none';
     registerBtn.style.display = 'none';
 }
@@ -34,5 +37,6 @@ else {
   loginBtn.style.display = 'inline-block';
   registerBtn.style.display = 'inline-block';
   presentationsAdminBtn.style.display = 'none';
+  interestsAdminBtn.style.display = 'none';
 }
 })

@@ -14,7 +14,7 @@
 <body>
   <?php include '../components/navbar.php'; ?>
 
-    <h1>Създай интерес</h1>
+    <h1>Добави интерес</h1>
 
     <div id="interest-name-field">
         <input type="text" id="interest-name" class="interest-name">
